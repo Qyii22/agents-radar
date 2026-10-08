@@ -11,7 +11,8 @@ on:
     # was dispatched 5h07m late and the 08-27 run was never created at all.
     # qwen-flash has flat pricing, so moving the slot costs nothing (it would
     # have, under DeepSeek's peak/off-peak scheme).
-    - cron: "37 22 * * *"
+    - cron: "37 8 * * *"
+      timezone: "Asia/Shanghai"
   workflow_dispatch:
 
 permissions:
