@@ -1,13 +1,13 @@
 # ArXiv AI Research Digest 2026-10-08
 
-> Source: [ArXiv](https://arxiv.org/) (cs.AI, cs.CL, cs.LG) | 50 papers | Generated: 2026-10-08 02:14 UTC
+> Source: [ArXiv](https://arxiv.org/) (cs.AI, cs.CL, cs.LG) | 50 papers | Generated: 2026-10-08 06:24 UTC
 
 ---
 
 ---
 
 ### **Today's Highlights**  
-Recent AI research on October 8, 2026, reflects a growing focus on *efficiency*, *robustness*, and *real-world deployment* of intelligent systems. Key advances include novel methods for efficient inference (e.g., 2-bit KV caching and lightweight model compression), scalable agent frameworks with runtime awareness and self-evolution capabilities, and improved interpretability in multimodal and reasoning systems. Notably, several papers address long-standing challenges in generalization—through diversity-driven RL fine-tuning, compositional failure detection in diffusion models, and robust evaluation in dynamic environments. The integration of physics-informed constraints, causal discovery under small samples, and secure training against backdoors further underscores the field’s maturation toward deployable, trustworthy AI.
+Recent submissions highlight a growing focus on *embodied AI*, particularly in robotics and long-horizon task execution, with advances in world models (e.g., Long-WAM, RoboJEPA), self-correcting policies (FoldBack), and generalist agents (RoboQuest). A major theme is *efficiency and control*: from KV cache compression (ResidualQuant) to adaptive context routing (RECAST) and scalable inference via speculative decoding. Concurrently, foundational work in *LLM alignment and evaluation* is deepening—especially around post-hallucination reasoning (PHRBench), prompt sensitivity (Rephrase Before You Act), and validity without ground truth (Validity Without Ground Truth). The convergence of AI agents, physical embodiment, and real-time control signals a maturing shift toward autonomous, adaptive systems capable of sustained interaction with the real world.
 
 ---
 
@@ -17,56 +17,55 @@ Recent AI research on October 8, 2026, reflects a growing focus on *efficiency*,
 
 | Paper | Authors | Summary |
 | :--- | :--- | :--- |
-| [Training Advisors for LLM Agents from Task Outcomes](http://arxiv.org/abs/2610.09858v1) | Sergei Polezhaev et al. | Introduces Caddie, a method to train advisors that guide LLM agents using only task outcomes, enabling feedback without explicit human annotations. This improves agent performance in complex tasks while reducing reliance on costly supervision. |
-| [MIRROR: From Imitation to Internalization in LLM Personalization](http://arxiv.org/abs/2610.09795v1) | Huayi Lai et al. | Proposes MIRROR, a meta-personalization framework using self-distillation to internalize reference knowledge beyond surface-level style imitation. Enables high-quality personalization without overfitting to persona cues. |
-| [Decoupling Logic from Persona: Structural Immunity of Edge LLM Agents to Context Pollution](http://arxiv.org/abs/2610.09772v1) | Masaaki Nakatsu et al. | Demonstrates that edge-based LLM agents can maintain logical consistency even under heavy, misleading conversational history by decoupling logic from persona via structural design. Critical for real-time, low-resource AI applications. |
+| [EngramEdit: Decoupled Knowledge Updates in LLMs through Conditional Memory](http://arxiv.org/abs/2610.10533v1) | Hongru Cai, Ran Wei, Wenjie Wang et al. | Introduces a conditional memory architecture enabling targeted, efficient factual updates in LLMs without retraining. This allows for dynamic knowledge curation, critical for maintaining accuracy in evolving domains. |
+| [PHRBench: A Behavioral Evaluation of Post-Hallucination Reasoning in LLMs](http://arxiv.org/abs/2610.10455v1) | Linghao Meng, Feng He, Xuan Yang et al. | Proposes a benchmark to evaluate how LLMs resolve hallucinations after they’ve been introduced into their reasoning chain. This enables more robust assessment of model integrity beyond final outputs. |
+| [Validity Without Ground Truth: What Stated-Preference Economics Offers the Evaluation of Language Models](http://arxiv.org/abs/2610.10506v1) | Daniel Robert Kling Alexander, Catherine Louise Kling | Applies stated-preference economics to evaluate LLMs in value-laden, open-ended tasks where no "correct" answer exists. Offers a principled framework for assessing preference alignment without relying on ground-truth labels. |
+| [Reasoning-Token Spikes Under Prompted Untruthful Responding in Large Language Models](http://arxiv.org/abs/2610.10405v1) | Maverick Morales, Tomáš Dominik, Vermut Gao et al. | Reveals that deceptive responses in LLMs produce detectable spikes in reasoning token activity. This offers a new signal for monitoring model misbehavior during chain-of-thought reasoning. |
 
 #### 🤖 Agents & Reasoning (planning, tool use, multi-agent, chain-of-thought)
 
 | Paper | Authors | Summary |
 | :--- | :--- | :--- |
-| [AgentTime: Can Agents Estimate and Control Their Own Runtime?](http://arxiv.org/abs/2610.09944v1) | Michael Ofengenden et al. | Presents AgentTime, a framework enabling agents to estimate wall-clock time and dynamically control execution duration. Addresses a core gap in autonomous agent reliability and resource management. |
-| [SkillForge: Co-Evolving Skills and Agents via Dynamic Skill Lifecycles](http://arxiv.org/abs/2610.09832v1) | Yuyao Ge et al. | Introduces SkillForge, a system where agents co-evolve skills with lifecycle management to prune obsolete ones. Prevents memory bloat and enhances long-horizon task performance in evolving environments. |
-| [Self-Evolve With a Reference: Anchored Training of Tool-Integrated Agents](http://arxiv.org/abs/2610.09856v1) | Wenjie Liao et al. | Proposes anchored self-evolution using a curriculum agent to generate tasks and a reference executor for feedback. Mitigates instability in self-consistency signals during training. |
-| [LiveMACE: Process-Aware Evaluation of LLM Agent Capabilities in Evolving Markets](http://arxiv.org/abs/2610.09872v1) | Jun Zhao et al. | Introduces LiveMACEBench, a process-aware benchmark that evaluates agent capabilities beyond final outcomes by tracking decision dynamics in changing markets. Enhances understanding of agent behavior in real-world feedback loops. |
+| [A Society of Researchers: Designing Institutions for Populations of Autonomous Research Agents](http://arxiv.org/abs/2610.10468v1) | Ali Asaria, Deep Gandhi, Tony Salomone | Argues that unstructured populations of research agents will naturally develop organizational structures, advocating for formal institutional design to prevent inefficiencies and conflicts at scale. |
+| [RoboQuest: Generalist Physical Agents that Search, Inspect and Test](http://arxiv.org/abs/2610.10388v1) | Liu Renhang, Navonil Majumder, Tej Deep Pala et al. | Presents a generalist robot agent capable of autonomously exploring unfamiliar environments, inspecting objects, and testing hypotheses—key for operating in real-world settings without pre-programmed knowledge. |
+| [FoldBack: Self-Correcting Masked Generative Policy for Long-Horizon Garment Folding](http://arxiv.org/abs/2610.10462v1) | Lipeng Zhuang, Shiyu Fan, Yingdong Ru et al. | Introduces a generative policy that detects failures mid-trajectory and triggers recovery mechanisms, enabling reliable long-horizon manipulation even after slips or missed grasps. |
+| [RECAST: Learning to Compute the Right Context through Adaptive Evidence Routing](http://arxiv.org/abs/2610.10507v1) | Yilun Hao, Krishna Sayana, Isabella Ye et al. | Proposes a dynamic retrieval mechanism that adaptively routes evidence based on query semantics, moving beyond fixed similarity-based retrieval to improve relevance in long-context agentic workflows. |
 
 #### 🔧 Methods & Frameworks (new techniques, benchmarks, efficiency improvements)
 
 | Paper | Authors | Summary |
 | :--- | :--- | :--- |
-| [Dual-QK: Sharp Queries and Flat Keys for Prunable 2-bit KV Caches](http://arxiv.org/abs/2610.09827v1) | Sunjoo Whang et al. | Presents Dual-QK, a rotation-based quantization method enabling 2-bit key-value caches with query-channel pruning. Achieves high compression without sacrificing generation quality. |
-| [NeuralZip: Reusable Setup for Fast Lossless Compression](http://arxiv.org/abs/2610.09916v1) | Martín Bravo et al. | Introduces NeuralZip, a reusable statistical setup for fast lossless compression of model weights. Reduces computational overhead in repeated compression tasks. |
-| [RollVerify: Bridging Efficiency and Accuracy in Long-Tail Rollout Reinforcement Learning](http://arxiv.org/abs/2610.09914v1) | Yongqiang Yao et al. | Proposes RollVerify to mitigate GPU inefficiencies caused by long-tailed rollouts in RL training. Balances accuracy and throughput through adaptive rollout verification. |
-| [Global Average Precision for Representation Learning](http://arxiv.org/abs/2610.09863v1) | Bill Psomas et al. | Introduces Global AP, a holistic metric for representation learning that evaluates retrieval across all queries simultaneously. Offers a more robust alternative to per-query mAP. |
-| [AdaPS-LiNGAM: Adaptive Predecessor Selection for Linear Non-Gaussian Acyclic Models under Small-Sample Settings](http://arxiv.org/abs/2610.09782v1) | Shun Yanashima et al. | Develops AdaPS-LiNGAM, which adapts predecessor selection in causal discovery under low-sample regimes. Improves accuracy in small-data causal inference, crucial for scientific modeling. |
+| [Decoupling Exploration from Optimization in RLVR](http://arxiv.org/abs/2610.10536v1) | Saif Punjwani, Micah Goldblum | Identifies a fundamental bottleneck in reinforcement learning with verifiable rewards: exploration and optimization are tightly coupled. The paper proposes decoupling them to enable discovery of novel reasoning strategies beyond prior data. |
+| [ResidualQuant: KV Cache Quantization for Looped Transformers with 2-Bit Residuals](http://arxiv.org/abs/2610.10381v1) | Heejun Kim, Junyoung Lee, SangLyul Cho et al. | Achieves 2-bit quantization of KV caches in looped transformers without performance loss, drastically reducing memory overhead—critical for long-context generation and deployment. |
+| [OrBIT: Structure-Guided Embedding Compression](http://arxiv.org/abs/2610.10385v1) | Yunied Puig, Amit Kumar Jaiswal | Proposes discovering optimal coding geometry for embedding tables rather than fixing it, leading to better compression ratios while preserving model performance. |
+| [Decentralized SGD under Heavy-Tailed Noise: Optimal Convergence Rates and the Role of Gradient Clipping](http://arxiv.org/abs/2610.10527v1) | Aleksandar Armacki, Haoyuan Cai, Ali H. Sayed | Establishes theoretical convergence guarantees for decentralized SGD under heavy-tailed noise, showing gradient clipping is essential—and optimal—for stability in distributed learning. |
 
 #### 📊 Applications (domain-specific, multimodal, code generation)
 
 | Paper | Authors | Summary |
 | :--- | :--- | :--- |
-| [Learning Traffic Flow Dynamics with Stochastic Physics-Informed Neural Cellular Automata](http://arxiv.org/abs/2610.09946v1) | Federica Bragone et al. | Combines cellular automata with stochastic physics-informed neural networks to model traffic flow with local rules and physical consistency. Enables scalable, interpretable urban mobility forecasting. |
-| [Itgan at NADI 2026 shared task: Parameter-Efficient Whisper Adaptation for Robust, Mixed-Dialect and Code-Switched Arabic ASR](http://arxiv.org/abs/2610.09934v1) | Ibrahim Almajai | Describes Itgan’s LoRA-adapted Whisper system for Arabic speech recognition across dialects and code-switching. Achieves strong performance on consumer GPUs, advancing inclusive speech tech. |
-| [UltraText Bench: A Comprehensive Bilingual Benchmark for Evaluating Visual Text Rendering in Image Generation](http://arxiv.org/abs/2610.09823v1) | Deyuan Liu et al. | Introduces UltraText Bench, a bilingual benchmark testing image generators’ ability to render dense, legible text across multiple regions. Addresses the growing need for reliable visual text evaluation. |
-| [ORCA: Hunting Compositional Failures in Text-to-Image Diffusion](http://arxiv.org/abs/2610.09841v1) | Arshia Hemmat et al. | Proposes ORCA, a diagnostic tool that identifies and categorizes compositional failures in text-to-image models (e.g., misattributed spatial relations). Enables targeted model improvement. |
-| [DeepTopoClustering: Unsupervised Derivation of Surface Process Taxonomy from 4D Point Clouds for Topographic Monitoring](http://arxiv.org/abs/2610.09860v1) | Jiapan Wang et al. | Develops DeepTopoClustering to unsupervisedly classify surface processes from 4D laser scans. Enables automated monitoring of geological changes without labeled data. |
+| [SciExam for ENSO: Can AI Agents Build Climate Models?](http://arxiv.org/abs/2610.10513v1) | Yinling Zhang, Langchen Liu, Dongbin Xiu et al. | Introduces SciExam, a benchmark to evaluate whether AI agents can generate valid scientific climate models for El Niño prediction—challenging current evaluation paradigms that rely on known answers. |
+| [SOTA: Stock Options Trading Agents Guided by Option-Implied Return Distributions](http://arxiv.org/abs/2610.10407v1) | Yizhen Xie, Mengyang Liu | Develops an AI agent that uses option-implied distributions to guide trading decisions, addressing the complexity of high-dimensional option markets with thousands of instruments per stock. |
+| [TaoD2C-Bench: Benchmarking MLLMs for Industrial UI Code Generation Beyond Visual Fidelity](http://arxiv.org/abs/2610.10374v1) | Chengwei Shi, Yunnong Chen, Tingting Zhou et al. | Introduces a benchmark that evaluates MLLMs not just on visual recognition but on constraint-aware reasoning—essential for generating correct industrial UI code under domain-specific rules. |
+| [Document-Level Text Simplification in Estonian Using Large Language Models](http://arxiv.org/abs/2610.10378v1) | Meeri-Ly Muru, Eduard Barbu | Advances document-level simplification in low-resource languages like Estonian, tackling cross-paragraph coherence and discourse structure—filling a gap in multilingual NLP. |
 
 ---
 
 ### **Research Trend Signal**  
-A clear trend toward *practical, deployable AI* is emerging across today’s submissions. Researchers are increasingly prioritizing **efficiency**, **robustness**, and **interpretability** in real-world settings—moving beyond pure performance gains. Key signals include: (1) **compression and inference optimization** (e.g., NeuralZip, Dual-QK), which enable faster, lower-cost deployment; (2) **agent-centric autonomy**, with work on runtime estimation (AgentTime), skill lifecycle management (SkillForge), and process-aware evaluation (LiveMACE); (3) **robustness under distribution shift and adversarial conditions**, seen in fault diagnosis (HVAC), causal discovery (AdaPS-LiNGAM), and security (backdoor detection in AFMs); and (4) **domain-specific generalization**, such as mixed-dialect ASR, topographic clustering, and compositional image generation. These efforts collectively reflect a maturing field focused on **trustworthy, efficient, and context-aware AI systems** ready for industrial and societal integration.
+A clear trend emerging across today’s papers is the **move from isolated capabilities to integrated, embodied, and persistent intelligence**. Systems are no longer evaluated solely on single-task accuracy but on their ability to sustain long-term goals in dynamic environments—evident in long-horizon policies (FoldBack), persistent memory (Never Look Back), and continual adaptation (EmbodiedRSI). Simultaneously, there is a strong emphasis on **efficiency and control**: methods like ResidualQuant and OrBIT optimize resource usage, while frameworks like RECAST and Decoupling RLVR enhance decision-making precision. Another key signal is the **evolution of evaluation itself**, with benchmarks like PHRBench and SciExam pushing beyond correctness toward behavioral and causal validity. Finally, the rise of *multi-agent ecosystems* (A Society of Researchers) and *agentic co-evolution* (CoTrace, BehaviorTrace) suggests a future where AI systems operate not as tools, but as collaborative, self-organizing entities—requiring new principles of governance, safety, and scalability.
 
 ---
 
 ### **Worth Deep Reading**
 
-1. **[AgentTime: Can Agents Estimate and Control Their Own Runtime?](http://arxiv.org/abs/2610.09944v1)**  
-   *Why*: This paper tackles a foundational yet under-explored challenge—runtime awareness in autonomous agents. As agents become more complex, their ability to manage time and resources becomes critical for reliability and scalability. The proposed framework could become a cornerstone for next-generation agent architectures.
+1. **[RECAST: Learning to Compute the Right Context through Adaptive Evidence Routing](http://arxiv.org/abs/2610.10507v1)**  
+   This paper redefines how agents interact with information sources. By replacing static retrieval with adaptive routing based on semantic context, it tackles a core limitation of RAG systems—over-reliance on surface similarity. Its implications extend beyond text to vision-language-action pipelines, making it essential reading for anyone designing intelligent, adaptive agents.
 
-2. **[ORCA: Hunting Compositional Failures in Text-to-Image Diffusion](http://arxiv.org/abs/2610.09841v1)**  
-   *Why*: Despite advances in diffusion models, compositional errors remain a major barrier to real-world use. ORCA provides a systematic diagnostic method to identify and categorize these failures—a rare step toward *understanding* model limitations rather than just improving metrics.
+2. **[SciExam for ENSO: Can AI Agents Build Climate Models?](http://arxiv.org/abs/2610.10513v1)**  
+   This paper confronts one of AI’s most pressing challenges: evaluating genuine scientific innovation. By proposing a framework that judges models not by correctness but by scientific validity, it sets a new standard for AI in open-ended research. It’s a must-read for researchers aiming to move beyond benchmark hacking toward real-world impact.
 
-3. **[DeepTopoClustering: Unsupervised Derivation of Surface Process Taxonomy from 4D Point Clouds](http://arxiv.org/abs/2610.09860v1)**  
-   *Why*: This work bridges geoscience and AI by enabling unsupervised classification of terrain evolution from massive sensor data. It exemplifies how deep learning can empower domain experts with automated, reproducible insights—without requiring labeled data or expert priors.
+3. **[Why Forget-Only Unlearning Needs Memorization](http://arxiv.org/abs/2610.10519v1)**  
+   Challenges the assumption that unlearning requires only deletion. This paper reveals that memorization is a necessary component for effective deletion—a counterintuitive insight with profound implications for privacy-preserving machine learning. It forces a rethink of unlearning protocols and could reshape how we design compliant AI systems.
 
 ---
-*This digest is auto-generated by [agents-radar](https://github.com/duanyytop/agents-radar).*
+*This digest is auto-generated by [agents-radar](https://github.com/Qyii22/agents-radar).*

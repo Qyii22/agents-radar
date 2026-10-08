@@ -1,6 +1,6 @@
 # AI CLI Tools Community Digest 2026-10-08
 
-> Generated: 2026-10-08 02:14 UTC | Tools covered: 7
+> Generated: 2026-10-08 06:24 UTC | Tools covered: 7
 
 - [Claude Code](https://github.com/anthropics/claude-code)
 - [OpenAI Codex](https://github.com/openai/codex)
@@ -15,118 +15,113 @@
 
 ## Cross-Tool Comparison
 
-# **Cross-Tool AI CLI Ecosystem Comparison Report**  
-*Generated: 2026-10-08 | Data Source: GitHub Community Digests*
+# **AI CLI Tools Ecosystem Cross-Tool Comparison Report**  
+*Generated: 2026-10-08 | For Technical Decision-Makers & Developers*
 
 ---
 
 ### **1. Ecosystem Overview**
 
-The AI CLI developer tools landscape in Q4 2026 is characterized by rapid iteration, increasing maturity in agent architecture, and a growing focus on reliability, security, and cross-platform stability. While core capabilities like model selection, session management, and tool execution are now standard, community feedback reveals that developers are shifting from feature discovery to operational trust—demanding predictable behavior, transparent error handling, and robust session persistence. Emerging patterns point toward the need for durable agent lifecycles, secure sandboxing, and enterprise-grade compliance. Tools are diverging in approach: some prioritize open transparency (e.g., OpenCode), others emphasize integration depth (e.g., Copilot CLI), while others are building foundational infrastructure (e.g., Qwen Code’s Kubernetes runtime).
+The AI CLI tool ecosystem in Q4 2026 reflects a maturing, high-stakes landscape where reliability, security, and developer experience are paramount. Major players like **Claude Code**, **OpenAI Codex**, and **Gemini CLI** are advancing core agent orchestration and model integration, while newer entrants such as **Pi**, **Qwen Code**, and **OpenCode** are pushing boundaries in observability, resilience, and multi-agent architectures. Despite strong innovation, widespread instability—particularly on Windows and in cross-platform session management—has become a shared pain point. The trend toward enterprise-grade features (HIPAA compliance, managed policies, audit trails) underscores growing adoption in regulated environments, signaling a shift from experimentation to production use.
 
 ---
 
 ### **2. Activity Comparison**
 
-| Tool | Issues Count (Today) | PRs Merged (Last 24h) | Discussions (Active) | Release Status |
-|------|------------------------|--------------------------|------------------------|----------------|
-| **Claude Code** | 10 | 10 | N/A | v2.1.293 (stable) |
-| **OpenAI Codex** | 10 | 10 | 4 | `rust-v0.162.0-alpha.17.1` (alpha) |
-| **Gemini CLI** | 10 | 10 | N/A | `v0.65.0-nightly.20261008.g44d764ee5` (nightly) |
-| **GitHub Copilot CLI** | 10 | 0 | N/A | v1.0.94-3 (stable) |
-| **OpenCode** | 10 | 10 | N/A | No new release |
-| **Pi** | 10 | 10 | N/A | v1.1.0 (stable) |
-| **Qwen Code** | 10 | 10 | N/A | v0.25.0-nightly.20261007.8003d28042 |
+| Tool | Issues Count | PRs Count | Discussions Count | Release Status |
+|------|--------------|-----------|-------------------|----------------|
+| **Claude Code** | 10 | 10 | N/A | ✅ v2.1.294 (stable), `haiku-5.5` default |
+| **OpenAI Codex** | 10 | 10 | 4 | ⚠️ Alpha releases; critical Windows bugs |
+| **Gemini CLI** | 10 | 10 | N/A | 🔁 Nightly-only (`v0.65.0-nightly`) |
+| **GitHub Copilot CLI** | 9 | 0 (no new merges) | N/A | ✅ v1.0.94-3 (stable) |
+| **OpenCode** | 10 | 10 | N/A | ❌ No new release; UI backlash |
+| **Pi** | 10 | 10 | 1 | ✅ v1.1.0 (new feature: OSC 7501) |
+| **Qwen Code** | 10 | 10 | N/A | 🔁 Nightly-only (`v0.25.0-nightly`) |
 
-> ✅ **Observation**: All tools show high activity in issues and PRs, indicating strong development momentum. Only OpenCode lacks a recent release, though it has active PRs. OpenAI Codex and Gemini CLI are using nightly/alpha releases, signaling experimental or unstable build pipelines.
+> 📌 *Note*: GitHub Copilot CLI shows no recent PR merges despite active issue reporting—suggesting stalled contributions or delayed review cycles. OpenCode’s lack of stable release amid high community frustration indicates potential maturity risk.
 
 ---
 
 ### **3. Shared Feature Directions**
 
-Across all major tools, the following requirements appear consistently in issue reports, PRs, and feature trends:
+Multiple tools converge on five key feature demands:
 
-- **Persistent Session & Memory Management**  
-  → *Tools: Claude Code, OpenAI Codex, Gemini CLI, Pi, Qwen Code, OpenCode*  
-  Developers demand reliable `MEMORY.md` persistence, cross-session identity, and memory leak prevention—especially under long-running or remote workflows.
+| Requirement | Tools Involved | Specific Needs |
+|------------|----------------|----------------|
+| **Enterprise Security & Compliance** | Claude Code, Pi, Qwen Code, GitHub Copilot CLI | HIPAA-ready settings, managed policies, secure credential injection (`op://`), OAuth refresh tokens, sandbox hardening |
+| **Cross-Platform Stability** | OpenAI Codex, Gemini CLI, OpenCode, Pi | Windows file handle contention (error 32), WSL2 clipboard issues, ARM64 compatibility, Wayland support |
+| **Agent Reliability & Resilience** | Gemini CLI, Qwen Code, OpenCode, Pi | Session recovery after outages, cancellation intent preservation, memory leak prevention, graceful failure handling |
+| **Observability & Debugging** | Pi, Gemini CLI, Qwen Code, OpenAI Codex | Real-time status reporting (OSC 7501), error context retention, WebSocket diagnostics, token usage transparency |
+| **Developer Experience (UX)** | All tools | Font size controls, accessible keyboard shortcuts, reliable TUI/CLI state persistence, visible quota tracking, config override clarity |
 
-- **Agent Reliability & Visibility**  
-  → *Tools: Claude Code, Gemini CLI, OpenAI Codex, Qwen Code, Pi*  
-  High-priority needs include: clear status reporting (`MAX_TURNS` exit signals), subagent trajectory visibility, and real-time program state tracking (e.g., OSC 7501 in Pi).
-
-- **Security & Access Control Hardening**  
-  → *Tools: OpenAI Codex, Qwen Code, Pi, Gemini CLI, GitHub Copilot CLI*  
-  Common concerns: ACL failures, sandbox misconfigurations, unvalidated input, privilege escalation risks, and silent permission bypasses.
-
-- **Improved Error Feedback & Diagnostics**  
-  → *Tools: All seven tools*  
-  Silent failures, opaque errors (e.g., “Unexpected server error”), and missing context during cancellations are recurring pain points.
-
-- **Cross-Platform Stability**  
-  → *Tools: OpenAI Codex, Claude Code, GitHub Copilot CLI, OpenCode, Qwen Code*  
-  Windows-specific file locking, MSIX virtualization, WSL2 clipboard issues, and macOS entitlements remain top blockers.
+> 💡 *Insight*: These overlaps indicate a consensus on foundational quality—developers expect stability and visibility before advanced features.
 
 ---
 
 ### **4. Differentiation Analysis**
 
-| Tool | Feature Focus | Target Users | Technical Approach |
-|------|---------------|--------------|--------------------|
-| **Claude Code** | Agent control, cost efficiency, custom subagents | Enterprise devs, remote teams | Deep integration with Anthropic’s API; emphasis on script-level control and subagent routing |
-| **OpenAI Codex** | Multi-agent V2, AWS GovCloud support | Government, regulated enterprises | Heavy investment in sandbox isolation and cloud compliance; currently struggling with Windows stability |
-| **Gemini CLI** | Agent intelligence, AST-aware navigation, native bash execution | Research-oriented, full-stack engineers | Experimental R&D focus; strong push toward precision and token efficiency |
-| **GitHub Copilot CLI** | Enterprise policy enforcement, managed settings, network domain control | Large orgs, compliance-heavy environments | Tight integration with GitHub ecosystem; policy-first design for managed deployments |
-| **OpenCode** | Global accessibility, localization parity, remote pairing | International developers, distributed teams | Open-source-first, multilingual UI focus; TUI-centric UX |
-| **Pi** | Real-time program status, session compaction, extension lifecycle | DevOps, embedded agents, terminal users | Terminal-native design; OSC 7501 for external dashboard integration |
-| **Qwen Code** | Durable agent staging, Kubernetes runtime, secure channeling | Cloud-native, scalable systems | Foundational work on managed agent architectures (H5b/H5c, H6b/H6c); private CSI runtime for isolation |
+| Dimension | Key Differentiators |
+|---------|---------------------|
+| **Target Users** |  
+- **Claude Code**: Enterprise developers using Anthropic models with strong policy enforcement (HIPAA, `op://`).  
+- **OpenAI Codex**: Windows-centric users reliant on GPT-6.1 Sol for local execution; high friction due to OS-specific bugs.  
+- **Gemini CLI**: Linux/CI-focused teams building autonomous agents; emphasis on AST-aware operations and codebase precision.  
+- **Qwen Code**: Cloud-native, Kubernetes-driven deployments; built for scalable, durable multi-agent systems.  
+- **Pi**: Observability-first workflow automation; ideal for CI/CD pipelines and terminal-integrated agents.  
+- **GitHub Copilot CLI**: DevOps and team workflows within GitHub ecosystem; policy-driven access control.  
+- **OpenCode**: Legacy UX advocates and multi-session power users; polarizing due to forced UI overhaul.  
 
-> 📌 **Key Insight**: While all tools support multi-agent workflows, **Qwen Code** and **Pi** are most advanced in building *production-grade agent infrastructures*, whereas **Copilot CLI** and **Claude Code** lead in enterprise policy and compliance features.
+| **Technical Approach** |  
+- **Claude Code**: Emphasis on declarative agent hooks (`prompt`, `agent`, `Stop`) and secure env injection via `op://`.  
+- **OpenAI Codex**: Deep integration with Windows sandboxing and MCP servers; focus on runtime stability.  
+- **Gemini CLI**: Model-level bias alignment (e.g., bash affinity), AST-aware file reading, and self-awareness research.  
+- **Qwen Code**: Dual-path architecture with H5b/H5c channel runtime and hosted session journaling for durability.  
+- **Pi**: OSC-based program status reporting for external monitoring; designed for embedded SDKs and tool integrations.  
+- **GitHub Copilot CLI**: Policy layer tightly coupled with GitHub Enterprise; domain-bound network restrictions.  
+- **OpenCode**: High-risk experimentation with unbounded session growth and aggressive UI changes.
 
 ---
 
 ### **5. Community Momentum & Maturity**
 
-- **Highest Momentum**:  
-  - **OpenAI Codex** – Rapid PRs addressing critical Windows sandbox issues; high engagement despite instability.  
-  - **Qwen Code** – Active roadmap shaping via public proposals (#12380, #12867); deep technical investment in durable sessions.  
-  - **Pi** – Stable v1.1.0 release with meaningful innovation (OSC 7501), showing mature product direction.
+| Indicator | Top Performers | Notes |
+|--------|----------------|-------|
+| **Active Development Velocity** | **Claude Code**, **Qwen Code**, **Pi** | All shipped meaningful updates today with multiple PRs and fixes. Qwen Code leads in architectural depth (dual-path agents). |
+| **Community Engagement** | **OpenAI Codex**, **Gemini CLI**, **Claude Code** | High comment counts (e.g., Codex #51601: 66 comments), strong upvote trends (Gemini #22323: 13 comments, 2 👍). |
+| **Maturity Signal** | **Claude Code**, **GitHub Copilot CLI** | Stable releases, clear versioning, open-source readiness (#41447), mature plugin ecosystems. |
+| **Risk Signals** | **OpenCode**, **Qwen Code (nightly)** | OpenCode faces user revolt over irreversible UI changes; Qwen Code's reliance on nightly builds suggests immature release cadence. |
 
-- **Rapid Iteration / Early Stage**:  
-  - **OpenCode** – High issue volume (140+ comments on clipboard bug), but low release cadence — indicates growing user base with immature stability.  
-  - **Gemini CLI** – Strong internal fixes and PRs, but no discussion activity — possibly centralized or closed-loop feedback.
-
-- **Mature & Stable**:  
-  - **Claude Code** – Regular stable releases, large PR throughput, and community-driven feature requests.  
-  - **GitHub Copilot CLI** – Well-integrated into enterprise workflows; focused on incremental improvements and policy enforcement.
-
-> 🔁 **Trend**: Tools with **open-source foundations (OpenCode, Qwen Code)** are driving architectural innovation, while **closed or platform-locked tools (Codex, Copilot CLI)** are advancing in integration and compliance—suggesting a bifurcation between open innovation and enterprise readiness.
+> ✅ *Conclusion*: **Claude Code** and **Pi** show the strongest balance of momentum, stability, and forward-looking innovation. **OpenAI Codex** is highly active but plagued by platform-specific regressions.
 
 ---
 
 ### **6. Trend Signals**
 
-- **From "Magic" to "Reliability"**:  
-  The shift from novelty to operational trust is evident—developers now prioritize *session continuity*, *predictable behavior*, and *transparent failure modes*. Silent crashes and data loss (e.g., `MEMORY.md` truncation) are being flagged as P1 issues.
+1. **Security First, Transparency Second**  
+   - Demand for `op://` secrets, OAuth refresh tokens, and secure environment injection is universal across tools. This signals that developers now treat credentials and access control as non-negotiable—especially in enterprise contexts.
 
-- **Security-by-Design Expectations**:  
-  Model-generated code must not only be correct but also safe. False positives (e.g., `ls -ld` blocked), privilege escalations, and XSS vectors in web-shells are being treated as urgent security flaws—not edge cases.
+2. **Agent Reliability > Feature Bloat**  
+   - Persistent issues around hang detection (`generalist agent hangs`), session recovery (`hosted journal dies`), and cancellation handling reveal that users prioritize predictability over novelty. Tools that fail here lose trust fast.
 
-- **Distributed & Remote Workflows Are Standard**:  
-  Features like remote pairing (`OpenTunnel`), multi-instance runtime support, and unified session visibility across clients are emerging as baseline expectations—especially among distributed teams.
+3. **Observability as Infrastructure**  
+   - **Pi’s OSC 7501** is a paradigm shift—making agent state machine-readable without parsing logs. This pattern will likely be adopted by others. Expect more tools to expose structured metadata (status, errors, timing).
 
-- **Developer Experience (DX) Is Now Core**:  
-  Keyboard shortcuts, copy-paste integrity, session recovery, and cancellation hooks are no longer “nice-to-have” but critical for productivity. Tools ignoring these are losing credibility.
+4. **Windows Is the Weak Link**  
+   - Over half of top issues (Codex, OpenCode, Pi, Gemini CLI) cite Windows-specific failures: file locks, process leaks, clipboard bugs. This highlights a systemic gap in cross-platform testing and may drive demand for containerized or virtualized execution layers.
 
-- **Model Agnosticism Is Growing**:  
-  Support for multiple models (e.g., `claude-haiku-5.5` in Copilot CLI, GPT-6.1 Sol in Codex) shows a move toward vendor neutrality—developers want flexibility, not lock-in.
-
-> 💡 **Reference Value for Developers**:  
-> Tools with **active issue triaging**, **transparent changelogs**, and **strong community discussions** (e.g., OpenCode, Qwen Code, Pi) offer higher signal-to-noise ratios for early adopters seeking innovation.  
-> Tools with **enterprise policies**, **compliance features**, and **stable release cycles** (e.g., Copilot CLI, Claude Code) are better suited for production use in regulated environments.
+5. **Model Flexibility ≠ Model Choice**  
+   - While all tools now support multiple models (e.g., Haiku 5.5), the real challenge is *consistent behavior across them*. Users want predictable cost, latency, and output quality—not just a menu of options.
 
 ---
 
-**Conclusion**: The AI CLI ecosystem is maturing rapidly, with distinct paths emerging: **platform-anchored compliance** (Copilot, Codex), **open innovation** (OpenCode, Qwen Code), and **infrastructure-first agent systems** (Pi, Gemini CLI). Technical decision-makers should evaluate tools based on their **target workflow complexity**, **security posture**, and **long-term maintainability**—not just model variety or speed.
+### **Final Recommendation**
+
+For **production use**: Prioritize **Claude Code** (for compliance + stability) and **Pi** (for observability + resilience).  
+For **enterprise automation**: **Qwen Code** and **GitHub Copilot CLI** offer the most robust governance and lifecycle management.  
+Avoid **OpenCode** until UI rollback or opt-in mode is introduced.  
+Monitor **OpenAI Codex** closely—its Windows instability could disrupt mission-critical workflows.
+
+> 🔄 *Trend Watch*: Look for tools adopting **structured status reporting (like OSC 7501)** and **Kubernetes-native delivery**—these are becoming de facto standards for scalable AI workflows.
 
 ---
 
@@ -140,89 +135,75 @@ Across all major tools, the following requirements appear consistently in issue 
 > Source: [anthropics/skills](https://github.com/anthropics/skills)
 
 **Claude Code Skills Community Highlights Report**  
-*Data as of 2026-10-08 | Source: [anthropics/skills GitHub Repository](https://github.com/anthropics/skills)*
+*Data as of 2026-10-08 | Source: github.com/anthropics/skills*
 
 ---
 
-### **1. Top Skills Ranking**  
-*(Ranked by community engagement: comments, merge urgency, and functional novelty)*
+### **1. Top Skills Ranking** *(by community discussion & impact)*
 
-1. **`proofcore-contract-auditor`** – *Web3 Smart Contract Auditing via Blockchain Anchoring*  
-   - **Functionality**: Automates static analysis of Solidity/Rust smart contracts and anchors cryptographic audit proofs on the public TON Blockchain using ProofCore’s zero-storage Merkle protocol.  
-   - **Discussion Highlights**: High interest from Web3 developers; praised for enabling trustless verification in decentralized applications.  
-   - **Status**: Open (#1771), awaiting review.  
-   🔗 [PR #1771](https://github.com/anthropics/skills/pull/1771)
+1. **`proofcore-contract-auditor`**  
+   *PR #1771* – Adds automated static analysis for Solidity and Rust smart contracts, with cryptographic audit proofs anchored on the TON Blockchain via ProofCore’s zero-storage Merkle protocol.  
+   🔹 *Discussion highlights:* High interest from Web3 developers; praised for enabling trustless code verification in decentralized systems.  
+   🔹 *Status:* Open (created 2026-09-15) — actively discussed for integration.
 
-2. **`md2video-audio`** – *Markdown-to-Professional Video Conversion with Voiceover*  
-   - **Functionality**: Compiles Markdown into MP4 videos with human-like voiceovers using Marp for slide generation. Zero-cost, real-time rendering.  
-   - **Discussion Highlights**: Strong demand for content creation automation; seen as a game-changer for educators and creators.  
-   - **Status**: Open (#1703), well-documented, ready for integration.  
-   🔗 [PR #1703](https://github.com/anthropics/skills/pull/1703)
+2. **`md2video-audio`**  
+   *PR #1703* – Converts Markdown documents into professional-grade MP4 videos with human-like voiceovers using Marp and audio synthesis.  
+   🔹 *Discussion highlights:* Seen as a breakthrough for content creators and educators; potential for scalable explainer video generation.  
+   🔹 *Status:* Open (created 2026-09-01) — low activity but high perceived value.
 
-3. **`awt` (AI Watch Tester)** – *AI-Powered End-to-End Web Testing*  
-   - **Functionality**: Enables Claude to control browsers and run automated E2E tests without code—zero-code test generation and execution.  
-   - **Discussion Highlights**: Recognized as a major leap in testing automation; cited as a "missing piece" for DevOps workflows.  
-   - **Status**: Open (#822), mature project with external GitHub repo.  
-   🔗 [PR #822](https://github.com/anthropics/skills/pull/822)
+3. **`AWT (AI Watch Tester)`**  
+   *PR #822* – Enables AI-powered end-to-end browser testing by giving Claude vision and control over web apps. Generates tests without code.  
+   🔹 *Discussion highlights:* Strong endorsement for QA automation; cited as a key enabler for autonomous DevOps workflows.  
+   🔹 *Status:* Open (created 2026-03-31) — mature project with ongoing maintenance.
 
-4. **`scnet-hpc`** – *SCNet HPC Cluster Management via SSH & Slurm*  
-   - **Functionality**: Streamlines access to high-performance computing clusters with profile-based SSH, job submission, and resource allocation.  
-   - **Discussion Highlights**: Popular among researchers and HPC users; addresses real pain points in scientific computing workflows.  
-   - **Status**: Open (#1615), includes detailed usage guidance.  
-   🔗 [PR #1615](https://github.com/anthropics/skills/pull/1615)
+4. **`scnet-hpc`**  
+   *PR #1615* – Facilitates SSH and Slurm-based job management on SCNet HPC clusters with profile-driven configuration.  
+   🔹 *Discussion highlights:* Appeals to academic and research users; addresses real pain points in scientific computing workflows.  
+   🔹 *Status:* Open (created 2026-08-20) — well-documented and technically sound.
 
-5. **`compact-memory` (Proposal)** – *Symbolic State Notation for Long-Running Agents*  
-   - **Functionality**: Introduces a compact, symbolic representation for agent memory to reduce context bloat and improve state persistence.  
-   - **Discussion Highlights**: Sparks debate on agent scalability; proposed as a foundational skill for long-term AI agents.  
-   - **Status**: Open issue (#1329), not yet submitted as PR.  
-   🔗 [Issue #1329](https://github.com/anthropics/skills/issues/1329)
+5. **`compact-memory` (proposal)**  
+   *Issue #1329* – Proposes a symbolic notation system for compact agent state representation, reducing context bloat in long-running agents.  
+   🔹 *Discussion highlights:* Identified as critical for scaling agent longevity; aligns with growing demand for efficient memory management.  
+   🔹 *Status:* Open proposal — not yet implemented as a PR.
 
-6. **`document-typography`** – *Typographic Quality Control for AI-Generated Docs*  
-   - **Functionality**: Detects and fixes common typographic flaws (orphans, widows, misaligned numbering) in generated documents.  
-   - **Discussion Highlights**: Widely appreciated—users report this is a “universal need” across all document types.  
-   - **Status**: Open (#514), early-stage but highly actionable.  
-   🔗 [PR #514](https://github.com/anthropics/skills/pull/514)
-
-7. **`notion-spec-to-implementation`** – *From Product Specs to Actionable Tasks*  
-   - **Functionality**: Transforms Notion-based product or technical specs into structured implementation tasks with acceptance criteria.  
-   - **Discussion Highlights**: Seen as essential for bridging product and engineering teams; aligns with agile workflows.  
-   - **Status**: Open (#1245), part of a larger suite proposal.  
-   🔗 [PR #1245](https://github.com/anthropics/skills/pull/1245)
+6. **`skill-quality-analyzer` & `skill-security-analyzer`**  
+   *PR #83* – Meta-skills that evaluate other skills across quality, structure, and security dimensions.  
+   🔹 *Discussion highlights:* Recognized as foundational for ecosystem health; essential for vetting community contributions.  
+   🔹 *Status:* Open (created 2025-11-06) — under review; potential for future adoption.
 
 ---
 
-### **2. Community Demand Trends**  
-Based on top Issues and feature requests:
+### **2. Community Demand Trends** *(from Issues & Proposals)*
 
-- **Workflow Automation & Tool Integration**: High demand for skills that bridge tools (e.g., SharePoint, Notion, HPC) with agent behavior.  
-- **Testing & Verification**: Strong push for AI-driven test generation (`AWT`) and validation pipelines (e.g., *Reasoning Quality Gate Pipeline*).  
-- **Security & Trust Boundaries**: Users are increasingly concerned about trust abuse (e.g., impersonating official skills) and insecure eval viewers.  
-- **Context Efficiency**: Repeated calls for lightweight, state-efficient skills (e.g., `compact-memory`, reducing token bloat).  
-- **Documentation & Usability**: Clear demand for better documentation clarity (e.g., `frontend-design`, `skill-creator` refactoring).  
-
-> 🔍 *Most anticipated new directions*: **Agent governance**, **end-to-end testing**, **context-aware state management**, and **cross-platform workflow orchestration**.
+The community is increasingly focused on **automated quality assurance**, **security hardening**, and **scalable agent workflows**:
+- **Test Generation & E2E Validation:** High demand for tools like AWT and improved eval frameworks.
+- **Code & Document Quality Control:** Persistent issues around typographic errors (PR #514), orphaned comments (PR #1734), and document formatting (PR #486).
+- **Security & Trust Boundaries:** Multiple issues highlight risks in skill impersonation (#492), eval-viewer XSS (#1394), and command injection (#1980).
+- **Workflow Automation:** Requests for org-wide sharing (#228), better skill distribution, and context-aware agent governance (#412).
+- **HPC & Infrastructure Integration:** Growing need for specialized skills targeting compute environments (e.g., `scnet-hpc`, `webapp-testing`).
 
 ---
 
-### **3. High-Potential Pending Skills**  
-These open PRs have strong traction and are likely to be merged soon due to clear value and active discussion:
+### **3. High-Potential Pending Skills** *(Active Comment Threads, Likely to Merge Soon)*
 
-- **`proofcore-contract-auditor`** (#1771): High-value Web3 use case; already has community endorsement.  
-- **`md2video-audio`** (#1703): Ready-to-deploy, solves a widespread content creation need.  
-- **`awt` (AI Watch Tester)** (#822): Mature external tool; fits perfectly into the ecosystem.  
-- **`webapp-testing` fix** (#1980): Critical security patch (removes `shell=True`); low-risk, high-impact.  
-- **`skill-creator` eval viewer hardening** (#1961): Addresses XSS and script breakout vulnerabilities—urgent for safety.  
+| Skill | PR / Issue | Status | Why It’s Promising |
+|------|------------|--------|---------------------|
+| `proofcore-contract-auditor` | #1771 | Open | High relevance in Web3; clear use case, strong technical foundation. |
+| `skill-creator` security hardening | #1961 | Open | Addresses critical vulnerabilities in eval viewer (XSS, script breakout). |
+| `webapp-testing` shell safety fix | #1980 | Open | Immediate security patch; minimal risk, high impact. |
+| `document-typography` | #514 | Open | Solves a universal pain point in AI-generated docs; simple, high-value fix. |
+| `compact-memory` | #1329 | Proposal | Directly tackles context window exhaustion—critical for long-term agents. |
 
-> ⚠️ All five are actively discussed and contain minimal blockers.
+> ✅ *These are likely candidates for merge in the next 1–2 weeks given their alignment with core platform stability and user demand.*
 
 ---
 
-### **4. Skills Ecosystem Insight**  
-The community’s most concentrated demand is for **secure, efficient, and production-ready agent workflows**—especially around testing, verification, cross-tool integration, and state management—driven by real-world deployment needs beyond prototyping.
+### **4. Skills Ecosystem Insight**
+
+The community’s most concentrated demand is for **secure, self-validating, and context-efficient agent workflows** — particularly around test automation, documentation integrity, and safe execution in production environments.
 
 ---  
-*Report generated by Technical Analyst | Claude Code Ecosystem Intelligence*  
-*Data sourced from [anthropics/skills](https://github.com/anthropics/skills) — October 8, 2026*
+*All links: [github.com/anthropics/skills](https://github.com/anthropics/skills)*
 
 ---
 
@@ -231,17 +212,21 @@ The community’s most concentrated demand is for **secure, efficient, and produ
 ---
 
 ### **1. Today's Highlights**  
-The latest release, **v2.1.293**, introduces *Claude Haiku 5.5* as the new default model with 1M context and improved cost efficiency ($0.10/$0.50 per Mtok). A critical update adds `agentType` to `subagentStatusLine`, enabling better script-level control over custom subagents. Meanwhile, community attention is sharply focused on persistent connectivity issues, stealth updates disrupting Remote Control sessions, and memory management bugs affecting Linux and macOS users.
+The latest release, **v2.1.294**, introduces critical fixes for `prompt` and `agent` hooks, improving the reliability of conditional logic in agent workflows—especially around blocking behavior and stop conditions. A major upgrade to **Claude Haiku 5.5** (now default on Anthropic API) brings a 1M context window and improved cost efficiency, enhancing performance for lightweight, high-throughput tasks.
 
 ---
 
 ### **2. Releases**  
-**v2.1.293** (2026-10-07)  
-- ✅ **Default Model Upgrade**: `claude-haiku-5-5` now defaults on Anthropic API — 1M context window, $0.10/$0.50 per Mtok (prompt >100K: $0.50/$2.50).  
-- 🔧 **Enhanced Subagent Visibility**: Added `agentType` field in `subagentStatusLine` payload to distinguish between custom subagent types in scripts.  
-- 🛠️ **Internal Improvements**: Several fixes to agent routing, memory handling, and CLI stability (no public changelog beyond these).
+**v2.1.294** (2026-10-07)  
+- Fixed incorrect evaluation of `prompt` and `agent` hooks written as instructions (e.g., "Block commands that..."), ensuring they now properly enforce intended restrictions.  
+- Improved judgment logic for `Stop` and `SubagentStop` hooks when expressed as natural language instructions (e.g., "Carry on if the build is broken"), reducing false negatives and improving workflow resilience.  
 
-> [GitHub Release v2.1.293](https://github.com/anthropics/claude-code/releases/tag/v2.1.293)
+**v2.1.293** (2026-10-06)  
+- Added **Claude Haiku 5.5 (`claude-haiku-5-5`)** as the default model: 1M context, $0.10/$0.50 per M tokens ($0.50/$2.50 for prompts >100K). Ideal for fast, low-cost inference.  
+- Introduced `agentType` in `subagentStatusLine` payload, enabling scripts to distinguish between custom subagent types in real-time.  
+- Added support for `op://` secret references in `settings.json` env section (via #23642), allowing direct integration with 1Password vaults without wrapper scripts.
+
+🔗 [Release v2.1.294](https://github.com/anthropics/claude-code/releases/tag/v2.1.294) | 🔗 [Release v2.1.293](https://github.com/anthropics/claude-code/releases/tag/v2.1.293)
 
 ---
 
@@ -249,16 +234,16 @@ The latest release, **v2.1.293**, introduces *Claude Haiku 5.5* as the new defau
 
 | Issue | Summary | Why It Matters | Community Reaction |
 |------|--------|----------------|--------------------|
-| [#69336](https://github.com/anthropics/claude-code/issues/69336) | API Error: Connection closed mid-response in new context windows (Linux) | Breaks workflow continuity; affects all new sessions. High impact for developers using remote or large projects. | ⭐ 21 👍, 20 comments — top priority |
-| [#92276](https://github.com/anthropics/claude-code/issues/92276) | Desktop 1.44121.4+ fails to auto-enable Remote Control for scheduled tasks (Windows regression) | Disrupts automation workflows; breaks CI/CD integrations. Regression from stable version 1.40609.0. | ⭐ 6 👍, 10 comments — urgent fix needed |
-| [#99192](https://github.com/anthropics/claude-code/issues/99192) | Code tab terminal integration fails on Windows (MSIX install) | Terminal shell can't access AppData files due to MSIX virtualization. Blocks scripting and debugging. | ⭐ 1 👍, 7 comments — platform-specific but impactful |
-| [#95364](https://github.com/anthropics/claude-code/issues/95364) | Desktop auto-update "stealth" relaunches while user away, dropping all Remote Control sessions | High-severity disruption for remote development. Users lose active sessions without warning. | ⭐ 4 👍, 6 comments — recurring pain point |
-| [#95276](https://github.com/anthropics/claude-code/issues/95276) | Same as #95364 (MacOS) — auto-update drops remote connections | Confirms cross-platform issue. Users report repeated disconnections during background updates. | ⭐ 1 👍, 4 comments |
-| [#100197](https://github.com/anthropics/claude-code/issues/100197) | Out-of-memory crashes (Renderer OOM) in macOS after opening artifact pane | Causes frequent app crashes (~4–5 GB RSS growth). Critical for users with large repos. | ⭐ 0 👍, 1 comment — early signal of memory leak |
-| [#99403](https://github.com/anthropics/claude-code/issues/99403) | `MEMORY.md` silently truncated without warning | Loss of project context; no indication of dropped entries. High risk for long-term planning. | ⭐ 0 👍, 5 comments — silent data loss |
-| [#87834](https://github.com/anthropics/claude-code/issues/87834) | Request for shared memory / persistent identity across sessions | Core need for continuity in multi-session workflows. Currently fragmented. | ⭐ 0 👍, 10 comments — feature gap |
-| [#98873](https://github.com/anthropics/claude-code/issues/98873) | Invalid bearer token in OTLP exports from desktop sessions (self-hosted gateway) | Breaks telemetry and monitoring pipelines. Cowork works fine — indicates client-side issue. | ⭐ 0 👍, 2 comments — niche but serious |
-| [#100354](https://github.com/anthropics/claude-code/issues/100354) | Cowork VM fails to start on Windows when Appx volume is non-system drive | EFS encryption conflict blocks `sessiondata.vhdx` creation. Widespread on enterprise systems. | ⭐ 0 👍, 1 comment — blocking for some users |
+| [#12953](https://github.com/anthropics/claude-code/issues/12953) | Mousewheel scrolls input history instead of chat history on Windows | Breaks expected UX flow; users lose focus during long sessions | 👍 23, 27 comments – top priority for Windows users |
+| [#34196](https://github.com/anthropics/claude-code/issues/34196) | Add font size control for VSCode chat panel | Critical accessibility and ergonomics fix; current font too small | 👍 111, 22 comments – highest upvote count in repo |
+| [#23642](https://github.com/anthropics/claude-code/issues/23642) | Support `op://` secrets in `settings.json` env | Enables secure, automated credential management via 1Password | 👍 25 – highly desired by enterprise users |
+| [#96299](https://github.com/anthropics/claude-code/issues/96299) | Windows: `claude.exe` processes accumulate and never terminate | Causes memory/disk bloat over time; impacts productivity | 8 comments – persistent concern since Sept 2026 |
+| [#97074](https://github.com/anthropics/claude-code/issues/97074) | Headless CLI uses ~1.8× more token window than interactive mode | Inflates costs silently; breaks budgeting for automation pipelines | 👍 2 – flagged as cost-sensitive regression |
+| [#96640](https://github.com/anthropics/claude-code/issues/96640) | Workflow harness relays stale user message with override priority | Causes agents to respond to outdated context, leading to logic errors | 6 comments – subtle but dangerous in complex workflows |
+| [#95369](https://github.com/anthropics/claude-code/issues/95369) | Workflow passes user chat into subagents and demotes computed task | Undermines intent of task decomposition; risks misalignment | 5 comments – highlights design flaw in agent orchestration |
+| [#100377](https://github.com/anthropics/claude-code/issues/100377) | Remote Control: CCR v2 worker registration fails with 400 error | Blocks remote execution for Mac users; recent outage since Oct 7 | 3 comments – urgent for distributed dev teams |
+| [#100317](https://github.com/anthropics/claude-code/issues/100317) | Scheduled tasks ignore `model: Default` and track last-used model | Creates inconsistency in automation jobs; hard to debug | 2 comments – impacts CI/CD reliability |
+| [#100399](https://github.com/anthropics/claude-code/issues/100399) | Windows Bash pipelines orphan grandchildren after exit | Leaves `tail`/`grep` processes running indefinitely | 1 comment – security & resource risk |
 
 ---
 
@@ -266,68 +251,175 @@ The latest release, **v2.1.293**, introduces *Claude Haiku 5.5* as the new defau
 
 | PR | Summary | Impact |
 |----|--------|--------|
-| [#100293](https://github.com/anthropics/claude-code/pull/100293) | Add HIPAA-compliant managed settings example (`hipaa-baseline.json`, `managed-mcp.lockdown.json`) | Enables secure, compliant self-hosting for regulated environments. Critical for enterprise adoption. |
-| [#82320](https://github.com/anthropics/claude-code/pull/82320) | Fix `setup.sh` aborts on macOS bash 3.2 | Ensures AWS gateway setup works out-of-the-box on older macOS systems. Fixes a common installation blocker. |
-| [#86746](https://github.com/anthropics/claude-code/pull/86746) | Preserve Python probe errors in `sg-python.sh` | Prevents silent failures when Python interpreters are missing. Now shows actual error logs. |
-| [#85323](https://github.com/anthropics/claude-code/pull/85323) | Fix YAML block scalar parsing in agent descriptions | Resolves misrendering of multiline `description: |` fields in agent frontmatter. Improves clarity. |
-| [#84364](https://github.com/anthropics/claude-code/pull/84364) | Fail-closed on pretooluse hook exceptions | Prevents unauthorized tool execution if hooks fail. Security hardening. |
-| [#85716](https://github.com/anthropics/claude-code/pull/85716) | Load rules from ancestor `.claude` directories | Prevents silent bypass of security policies when working across nested projects. |
-| [#41447](https://github.com/anthropics/claude-code/pull/41447) | Open-source Claude Code ✨ | Major milestone — publicly releasing core codebase. Enables full transparency, auditing, and community contribution. |
-| [#86746](https://github.com/anthropics/claude-code/pull/86746) | Re-enable stderr logging for Python probes | Enhances debugging experience by showing real interpreter errors instead of generic messages. |
-| [#85323](https://github.com/anthropics/claude-code/pull/85323) | Correctly parse multiline agent descriptions | Fixes rendering bugs in agent UIs and documentation tools. |
-| [#84364](https://github.com/anthropics/claude-code/pull/84364) | Enforce permission denial on hook exceptions | Hardens security layer in `hookify` plugin — prevents silent bypass of rules. |
+| [#100293](https://github.com/anthropics/claude-code/pull/100293) | Add HIPAA-compliant managed-settings example (`hipaa-baseline.json`, lockdown configs) | Enables regulated orgs to enforce data residency and session isolation out-of-the-box |
+| [#82320](https://github.com/anthropics/claude-code/pull/82320) | Fix AWS gateway setup.sh compatibility with macOS bash 3.2 | Prevents silent script failure on older macOS systems |
+| [#86746](https://github.com/anthropics/claude-code/pull/86746) | Preserve Python probe errors in `sg-python.sh` | Improves debugging when interpreter detection fails – no more silent failures |
+| [#85323](https://github.com/anthropics/claude-code/pull/85323) | Fix YAML block scalar parsing in agent descriptions | Ensures multiline `description: |` values are correctly parsed in agent metadata |
+| [#84364](https://github.com/anthropics/claude-code/pull/84364) | Make `pretooluse` hooks fail closed on exceptions | Security fix: prevents unauthorized tool execution due to unhandled errors |
+| [#85716](https://github.com/anthropics/claude-code/pull/85716) | Load `hookify` rules from ancestor `.claude` directories | Prevents silent bypass of security policies in nested project structures |
+| [#41447](https://github.com/anthropics/claude-code/pull/41447) | Open-source Claude Code ✨ | Long-awaited step toward transparency; enables community contributions and audits |
+| [#82320](https://github.com/anthropics/claude-code/pull/82320) | Fix `setup.sh` for macOS bash 3.2 | Resolves deployment barrier for many developers using default shell |
+| [#86746](https://github.com/anthropics/claude-code/pull/86746) | Improve Python interpreter probe diagnostics | Reduces friction in local environment setup |
+| [#85323](https://github.com/anthropics/claude-code/pull/85323) | Correctly parse YAML block scalars in agent specs | Fixes metadata corruption in plugin development |
 
 ---
 
 ### **5. Hot Discussions**  
-*No discussion threads provided in dataset.*
+*No active discussions were found in the provided data. This section is omitted.*
 
 ---
 
 ### **6. Feature Request Trends**  
-Top emerging feature directions from community requests:  
-- **Persistent Context & Memory**: Shared session memory, cross-session identity, and reliable `MEMORY.md` persistence (#87834, #99403).  
-- **Agent & Workflow Control**: Per-call `effort` parameter, path-scoped skill rules, and better subagent model routing (#98391, #93249, #100082).  
-- **Security & Access Control**: Directory allowlists, default-deny sandboxing, and robust rule inheritance (#92643, #85716).  
-- **Cross-Client Visibility**: Unified session list across clients (e.g., Omarchy sees all sessions, not just local ones) (#100372).  
-- **CLI & Desktop Usability**: Keyboard shortcuts (mic, effort switching), improved error feedback, and stable Remote Control behavior.
+Top feature directions from issues and PRs:  
+- **Security & Compliance**: Demand for `op://` secrets (#23642), HIPAA-ready managed settings (#100293), and secure environment injection.  
+- **UX & Accessibility**: Font size controls (#34196), better mouse interaction (#12953), mobile Remote Control UI improvements (#97410).  
+- **Agent Orchestration Clarity**: Requests for consistent context handling (#96640, #95369), accurate task prioritization, and reliable workflow state management.  
+- **Cross-Platform Stability**: Persistent issues on Windows (process leaks, Bash pipeline orphaning) and macOS (Remote Control failures) highlight need for robust OS-level testing.  
+- **Developer Experience**: Auto-cleanup of `.claude` dirs (#76995), better error visibility in tool probes, and CLI/environment consistency.
 
 ---
 
 ### **7. Developer Pain Points**  
-Recurring frustrations reported across platforms:  
-- **Stealth Updates**: Auto-updates quitting and relaunching the app disrupts active Remote Control sessions — especially painful for unattended or remote development.  
-- **Memory & Stability**: Frequent OOM crashes (macOS), silent truncation of `MEMORY.md`, and high RAM usage in renderer (esp. with artifact panes open).  
-- **Remote Control Reliability**: Persistent failures on Android (push not received), Windows (auto-enable broken), and MSIX installs (terminal access denied).  
-- **Inconsistent Behavior Across Platforms**: Bugs that appear only on specific OSes (macOS, Windows, Linux), often tied to filesystem or sandboxing differences.  
-- **Configuration Drift**: Silent changes like `/model` persisting globally cause unexpected usage spikes and model drift.  
-
-> **Recommendation**: Prioritize stability, session continuity, and transparent configuration state — especially for remote and automated workflows.
+Recurring frustrations reported across multiple issues:  
+- **Resource Leaks**: Accumulating background processes on Windows (#96299), orphaned Bash grandchildren (#100399) — cause long-term system degradation.  
+- **Inconsistent Model Behavior**: Scheduled tasks ignoring `Default` model setting (#100317), headless CLI consuming more tokens than interactive mode (#97074) — undermines automation predictability.  
+- **Poor Error Visibility**: Silent failures in tool execution, missing diagnostics from Python probes (#86746), unclear feedback in `advisor` tool timeouts (#100413).  
+- **Workflow Logic Bugs**: Stale messages relayed to subagents (#96640, #100033), incorrect task prioritization — leads to unreliable agent outputs.  
+- **Authentication & Sync Failures**: Remote Control not restored after app restart (#100114), CCR worker registration errors (#100377) — disrupts remote collaboration.
 
 ---  
-*Digest generated from GitHub data: [anthropics/claude-code](https://github.com/anthropics/claude-code)*
+*Digest generated: 2026-10-08 | Source: [github.com/anthropics/claude-code](https://github.com/anthropics/claude-code)*
 
 </details>
 
 <details>
 <summary><strong>OpenAI Codex</strong> — <a href="https://github.com/openai/codex">openai/codex</a></summary>
 
-# **OpenAI Codex Community Digest – 2026-10-08**
+**OpenAI Codex Community Digest — 2026-10-08**
 
 ---
 
 ### **1. Today's Highlights**  
-The latest release introduces **GPT-6.1 Sol as the default model** across bundled and Amazon Bedrock catalogs, with enhanced multi-agent support and AWS GovCloud compatibility. However, a surge in Windows-specific sandbox and runtime issues—particularly around `node_repl.exe` locking and ACL failures—has triggered widespread community concern, indicating critical stability challenges in the latest desktop builds.
+The latest release cycle introduces **GPT-6.1 Sol as the default model** in both bundled and Amazon Bedrock catalogs, alongside enhanced multi-agent support and AWS GovCloud compatibility. However, a surge of high-priority Windows sandbox and app stability issues—particularly around file handle contention (error 32) and startup failures—has triggered significant community concern. These bugs are impacting core workflows like Computer Use, Node REPL execution, and local TUI sessions.
 
 ---
 
 ### **2. Releases**  
-**`rust-v0.162.0-alpha.17.1`** (Latest)  
-- **GPT-6.1 Sol** now defaults in both bundled and Amazon Bedrock model catalogs (#49318, #49339).  
-- Amazon Bedrock now supports **multi-agent V2** and **Ultra reasoning** on compatible models; **AWS GovCloud regions** are now accepted by Bedrock Mantle (#49345, #49813).  
-- Sign-in improvements for MCP servers (partial note, incomplete in source).
+- **`rust-v0.162.0-alpha.20`, `0.162.0-alpha.18.1`, `0.162.0-alpha.17.1`**  
+  Incremental alpha updates focused on internal stability and tooling improvements for the Rust-based Codex core. No major feature changes reported.
 
-🔗 [Release Notes](https://github.com/openai/codex/releases/tag/rust-v0.162.0-alpha.17.1)
+- **`rust-v0.161.0`**  
+  Major update with key enhancements:  
+  ✅ **GPT-6.1 Sol** now defaults in bundled and Amazon Bedrock catalogs ([#49318](https://github.com/openai/codex/pull/49318), [#49339](https://github.com/openai/codex/pull/49339))  
+  ✅ **Amazon Bedrock** now supports **multi-agent V2** and **Ultra reasoning** on compatible models  
+  ✅ **AWS GovCloud** regions now supported in Bedrock Mantle ([#49345](https://github.com/openai/codex/pull/49345), [#49813](https://github.com/openai/codex/pull/49813))  
+  ✅ Sign-in improvements for MCP servers (partial fix)
+
+---
+
+### **3. Hot Issues**  
+*(Top 10 by comment count and impact)*
+
+| Issue | Summary & Impact | Community Reaction |
+|------|------------------|--------------------|
+| [#51601](https://github.com/openai/codex/issues/51601) | Windows app 26.1002.51308 fails sandbox setup due to sharing violation when validating active runtime | 66 comments, 21 👍 – Critical blocker for command execution on Windows |
+| [#48043](https://github.com/openai/codex/issues/48043) | Codex CLI 0.157.0 fails to start on Windows with daemon privilege error (0.156.1 works) | 61 comments, 44 👍 – Long-standing regression affecting enterprise users |
+| [#41220](https://github.com/openai/codex/issues/41220) | Abnormal quota depletion and usage accounting inconsistencies across multiple reports | 58 comments, 18 👍 – High-risk issue; suspected billing system flaw |
+| [#51590](https://github.com/openai/codex/issues/51590) | Sandbox fails opening `node_repl.exe` for ACL update (error 32); Computer Use blocked | 27 comments – Confirmed recurring issue tied to Windows file locks |
+| [#51719](https://github.com/openai/codex/issues/51719) | Computer Use fails during sandbox setup with OS error 32 (sharing violation) | 8 comments – Reproducible on elevated sandbox mode |
+| [#51969](https://github.com/openai/codex/issues/51969) | Sandbox setup blocked by running `bundled node_repl.exe` or Swift DLL (os error 32) | 2 comments – New report confirming root cause pattern |
+| [#51824](https://github.com/openai/codex/issues/51824) | ChatGPT for Windows crashes in `windows-updater.node` (0xc0000005) | 8 comments – App crash post-launch; potential memory corruption |
+| [#51731](https://github.com/openai/codex/issues/51731) | Dot cannot connect to Codex conversations: "Error unsupported placement format version 3" | 4 comments – Breaks cross-device dot integration |
+| [#51213](https://github.com/openai/codex/issues/51213) | Dot disappears from sidebar; cloud chat input disabled despite background tasks running | 3 comments – UI state desync affecting workflow continuity |
+| [#50787](https://github.com/openai/codex/issues/50787) | Plus plan usage limits not displayed in Windows app | 2 comments – UX failure; users can't monitor quotas |
+
+> 🔥 *Trend*: Windows-specific sandbox and process management bugs dominate—especially around file locking, runtime conflicts, and elevation handling.
+
+---
+
+### **4. Key PR Progress**  
+*(Top 10 recent closed PRs with technical significance)*
+
+| PR | Summary | GitHub Link |
+|----|--------|-------------|
+| [#51963](https://github.com/openai/codex/pull/51963) | Attribute compaction analytics to correct voice session ID | [Link](https://github.com/openai/codex/pull/51963) |
+| [#51930](https://github.com/openai/codex/pull/51930) | Support model-specific function description prefixes | [Link](https://github.com/openai/codex/pull/51930) |
+| [#51896](https://github.com/openai/codex/pull/51896) | Preserve native errors in Windows sandbox ACL diagnostics | [Link](https://github.com/openai/codex/pull/51896) |
+| [#51895](https://github.com/openai/codex/pull/51895) | Report specific reasons for WebSocket continuation failures | [Link](https://github.com/openai/codex/pull/51895) |
+| [#51893](https://github.com/openai/codex/pull/51893) | Record metrics for incremental tool updates | [Link](https://github.com/openai/codex/pull/51893) |
+| [#51892](https://github.com/openai/codex/pull/51892) | Preserve tool call completeness when arguments are truncated | [Link](https://github.com/openai/codex/pull/51892) |
+| [#51884](https://github.com/openai/codex/pull/51884) | Add experimental prediction forks that inherit parent context | [Link](https://github.com/openai/codex/pull/51884) |
+| [#51872](https://github.com/openai/codex/pull/51872) | Keep global app-server config independent of launch directory | [Link](https://github.com/openai/codex/pull/51872) |
+| [#51868](https://github.com/openai/codex/pull/51868) | Record tool registration metrics per sampling request | [Link](https://github.com/openai/codex/pull/51868) |
+| [#51866](https://github.com/openai/codex/pull/51866) | Preserve line breaks and links in multiline async questions | [Link](https://github.com/openai/codex/pull/51866) |
+
+> 🛠️ *Focus*: Improved diagnostics, telemetry, and resilience in sandbox and network layers. Also advancing async question handling and tool lifecycle tracking.
+
+---
+
+### **5. Hot Discussions**  
+*(Grouped by category)*
+
+#### **Ideas**
+- [#27941](https://github.com/openai/codex/discussions/27941) – *Support multiple remote Codex machines/runtimes in one client*  
+  Request for unified client control over distributed Codex instances—critical for DevOps and team collaboration.
+
+#### **Q&A**
+- [#45938](https://github.com/openai/codex/discussions/45938) – *Can PreToolUse substitute a tool result?*  
+  Clarification needed on whether hook boundaries prevent result substitution—important for building AI agents with custom logic.
+
+#### **Show and Tell**
+- [#51825](https://github.com/openai/codex/discussions/51825) – *Project Architect: open skill for long-running AI coding projects*  
+  MIT-licensed project enabling persistent, checkpointed software development across chats and agents.
+- [#51759](https://github.com/openai/codex/discussions/51759) – *BigaCli: Windows Codex workspace for phone workflows*  
+  Open-source web client allowing phone-based task queuing and file collection from a home PC’s Codex instance.
+
+---
+
+### **6. Feature Request Trends**  
+From Issues and Discussions, the top requested directions include:
+- ✅ **Persistent, resumable sessions** (TUI resume, local response retention)
+- ✅ **Cross-platform consistency** (Windows sandbox stability, Linux clipboard behavior)
+- ✅ **Improved diagnostics & visibility** (file handle leaks, ACL errors, WebSocket failure details)
+- ✅ **Multi-environment support** (multiple remote runtimes, shared workspaces)
+- ✅ **Better quota transparency & control** (real-time usage tracking, rate limit debugging)
+
+---
+
+### **7. Developer Pain Points**  
+Recurring frustrations identified:
+- ⚠️ **Windows sandbox failures** due to file handle contention (error 32), especially with `node_repl.exe` and Swift DLLs
+- ⚠️ **CLI and desktop app instability** on Windows (daemon privilege errors, crashes in updater modules)
+- ⚠️ **Unreliable local state persistence** (responses disappearing after restart, sessions lost)
+- ⚠️ **Inconsistent usage metering** (quota depletion faster than expected, no visible tracking)
+- ⚠️ **Broken integrations** (Dots connectivity, TUI copy-paste, async shortcut conflicts)
+- ⚠️ **Lack of debug visibility** (truncated logs, missing native error chains in sandbox diagnostics)
+
+> 💡 *Developer sentiment*: High frustration with Windows reliability and telemetry gaps. Requests for deeper diagnostics and better error messaging are consistent across platforms.
+
+---  
+*Digest compiled from GitHub data: [openai/codex](https://github.com/openai/codex) — October 8, 2026*
+
+</details>
+
+<details>
+<summary><strong>Gemini CLI</strong> — <a href="https://github.com/google-gemini/gemini-cli">google-gemini/gemini-cli</a></summary>
+
+# Gemini CLI Community Digest — 2026-10-08
+
+---
+
+### **1. Today's Highlights**  
+The latest nightly release, `v0.65.0-nightly.20261008.g44d764ee5`, addresses critical stability and security fixes, including a loop bug in the assignee workflow and enforcement of terminal user turn invariants. High-priority issues around agent reliability—particularly subagent recovery, generalist hangs, and browser agent configuration drift—are gaining traction, signaling ongoing focus on robustness in complex workflows.
+
+---
+
+### **2. Releases**  
+**`v0.65.0-nightly.20261008.g44d764ee5`**  
+- ✅ **Fix (CI)**: Resolved missing loop in `unassign-inactive-assignees` workflow ([#29609](https://github.com/google-gemini/gemini-cli/pull/29609))  
+- ✅ **Fix (Core)**: Enforced terminal user turn invariant and normalized request content handling ([#29609](https://github.com/google-gemini/gemini-cli/pull/29609))
+
+> *Note: This is a nightly build; no stable release yet.*
 
 ---
 
@@ -335,119 +427,16 @@ The latest release introduces **GPT-6.1 Sol as the default model** across bundle
 
 | Issue | Summary & Impact | Community Reaction |
 |------|------------------|--------------------|
-| [#51601](https://github.com/openai/codex/issues/51601) | Windows app 26.1002.51308 fails sandbox setup due to sharing violation on `node_repl.exe`. All commands fail pre-execution. | **54 comments**, 19 upvotes. High severity: blocks core functionality. Affects multiple users post-update. |
-| [#51590](https://github.com/openai/codex/issues/51590) | Sandbox fails to open `node_repl.exe` for ACL update (error 32); Computer Use and shell blocked. | **21 comments**, 0 upvotes. Reproducible on Windows 11; indicates deeper runtime conflict. |
-| [#51778](https://github.com/openai/codex/issues/51778) | Sandbox fails in 26.1002.52244: cannot access local files or run commands. | **8 comments**, 0 upvotes. Confirmed on x64 Windows 10. Critical for local dev workflows. |
-| [#51906](https://github.com/openai/codex/issues/51906) | Elevated sandbox fails during ACL refresh due to `node_repl.exe` locked by Codex process (error 32). | **2 comments**, 0 upvotes. Shows persistent file handle contention in elevated contexts. |
-| [#51862](https://github.com/openai/codex/issues/51862) | Setup refresh fails with `helper_unknown_error`: `node_repl.exe` locked by own process. | **3 comments**, 0 upvotes. Corroborates issue #51601; confirms OS-level file lock is root cause. |
-| [#50428](https://github.com/openai/codex/issues/50428) | Durable chat/fork fails due to `AbsolutePathBuf` deserialized without base path. | **22 comments**, 1 upvote. Affects workflow persistence; potential regression in state handling. |
-| [#48311](https://github.com/openai/codex/issues/48311) | Built-in LaTeX compiler fails to find standard directories. | **20 comments**, 8 upvotes. Blocks document generation for academic/workflow use cases. |
-| [#51594](https://github.com/openai/codex/issues/51594) | "New Work" prompt disabled after update despite existing chats working. | **8 comments**, 0 upvotes. UX regression affecting productivity flow. |
-| [#51340](https://github.com/openai/codex/issues/51340) | App crashes at startup via `windows-updater.node` (0xC0000005). Persists after reinstall. | **7 comments**, 0 upvotes. Indicates corrupted update module or memory corruption. |
-| [#49980](https://github.com/openai/codex/issues/49980) | Agent tools fail in WSL with process creation and workspace URI errors. | **8 comments**, 0 upvotes. Hinders hybrid Windows/WSL development environments. |
-
-> 🔥 **Trend**: Over 70% of top issues involve **Windows sandbox, ACL, or `node_repl.exe` contention**, suggesting a systemic runtime conflict introduced in recent builds.
-
----
-
-### **4. Key PR Progress**  
-
-| PR | Summary | Impact |
-|----|--------|--------|
-| [#51896](https://github.com/openai/codex/pull/51896) | Preserve native errors in Windows sandbox ACL diagnostics | Improves debugging visibility for ACL failures — critical for resolving #51601, #51590 |
-| [#51897](https://github.com/openai/codex/pull/51897) | Use dedicated matcher for network domain policies | Fixes wildcard semantics mismatch; prevents false positives in browser use permissions |
-| [#51895](https://github.com/openai/codex/pull/51895) | Report specific reasons for WebSocket continuation failures | Enhances observability of connection drops in remote workflows |
-| [#51893](https://github.com/openai/codex/pull/51893) | Record metrics for incremental tool updates | Enables telemetry-driven optimization of tool registration performance |
-| [#51892](https://github.com/openai/codex/pull/51892) | Preserve tool call completeness when arguments are truncated | Prevents false “incomplete” status in logs and audit trails |
-| [#51884](https://github.com/openai/codex/pull/51884) | Add experimental prediction forks that inherit parent context | Enables efficient prompt caching for AI-generated subtasks |
-| [#51872](https://github.com/openai/codex/pull/51872) | Keep global app-server config independent of launch directory | Avoids config leakage and failure on directory deletion |
-| [#51857](https://github.com/openai/codex/pull/51857) | Add app-server prompt prefix compatibility test | Prevents breaking changes from being deployed without feature flags |
-| [#51856](https://github.com/openai/codex/pull/51856) | Build Bazel release artifacts alongside Cargo | Enables dual-build pipeline for cross-platform consistency |
-| [#51847](https://github.com/openai/codex/pull/51847) | Preserve Cargo package names in Bazel Rust builds | Ensures correct dependency resolution in mixed build environments |
-
-> 📌 **Notable**: Multiple PRs focus on **debuggability, stability, and build parity** — likely responses to current instability trends.
-
----
-
-### **5. Hot Discussions**  
-
-#### **Ideas**
-- [#27941](https://github.com/openai/codex/discussions/27941): *Support multiple remote Codex machines/runtimes in one client*  
-  Proposal to extend remote control capabilities beyond single-machine supervision — valuable for distributed team workflows.
-
-#### **Q&A**
-- [#45938](https://github.com/openai/codex/discussions/45938): *Can PreToolUse substitute tool results?*  
-  Clarifies design boundary: hooks can modify input but not override output — intentional for security and predictability.
-
-#### **Show and Tell**
-- [#51825](https://github.com/openai/codex/discussions/51825): *Project Architect* – Open skill for long-running AI projects  
-  MIT-licensed framework to manage decisions, checkpoints, and agent states across sessions. Addresses fragmentation in extended coding workflows.
-- [#51759](https://github.com/openai/codex/discussions/51759): *BigaCli* – Windows web client for phone-based task queuing  
-  Allows mobile users to monitor and queue tasks on a home PC via a browser interface. Useful for async work across devices.
-
----
-
-### **6. Feature Request Trends**  
-Based on recurring issues and discussions, the top feature directions include:  
-- **Enhanced cross-platform stability**, especially on Windows (sandbox, ACL, file locking).  
-- **Better error transparency** in sandbox and tool execution (e.g., detailed ACL failure logs).  
-- **Multi-instance remote runtime support** (discussed in #27941).  
-- **Persistent state restoration** (e.g., restore windows after restart — #27104).  
-- **Password-based SSH auth** (requested in #44446).  
-- **Improved voice dictation reliability** (especially in VS Code — #49351).  
-- **Support for offline/local task queuing** (via tools like BigaCli).
-
----
-
-### **7. Developer Pain Points**  
-- **Persistent `node_repl.exe` file locking** on Windows — seen in 5+ high-priority issues. Suggests flawed process lifecycle management.  
-- **Inconsistent sandbox behavior** between Windows and macOS, despite same codebase.  
-- **Silent or opaque failures** in tool calls (`helper_unknown_error`, `blocked by policy`) with no actionable diagnostics.  
-- **Desktop app crashes** with `0xC0000005` (access violation), even after reinstallation — points to corrupt binaries or update logic.  
-- **Loss of UI state** (e.g., window/session restoration — #27104) and **broken shortcuts** (e.g., project picker — #50801).  
-- **Voice dictation failure in VS Code** despite working elsewhere — suggests extension-specific integration bugs.  
-- **LaTeX compiler broken** in built-in editor — impedes documentation workflows.
-
-> ⚠️ **Summary**: The Windows desktop client remains unstable, with deep-rooted sandbox and process management issues undermining developer trust. Immediate attention required to prevent further erosion of adoption.
-
----  
-*Digest generated: 2026-10-08 | Source: [openai/codex GitHub](https://github.com/openai/codex)*
-
-</details>
-
-<details>
-<summary><strong>Gemini CLI</strong> — <a href="https://github.com/google-gemini/gemini-cli">google-gemini/gemini-cli</a></summary>
-
-# Gemini CLI Community Digest – 2026-10-08
-
----
-
-### **1. Today's Highlights**  
-The latest nightly release, `v0.65.0-nightly.20261008.g44d764ee5`, addresses critical stability and security fixes, including a terminal user turn invariant enforcement and a fix for unassigned assignees in CI workflows. Key PRs have resolved persistent OAuth issues, improved shell command cancellation, and enhanced security around credential handling—signaling strong focus on reliability and user trust.
-
----
-
-### **2. Releases**  
-**`v0.65.0-nightly.20261008.g44d764ee5`**  
-- ✅ **Fix (CI):** Added missing loop in `unassign-inactive-assignees` workflow ([#29609](https://github.com/google-gemini/gemini-cli/pull/29609))  
-- ✅ **Fix (Core):** Enforced terminal user turn invariant and normalized request content to prevent malformed API payloads ([#29612](https://github.com/google-gemini/gemini-cli/pull/29612))
-
----
-
-### **3. Hot Issues**  
-
-| Issue | Summary & Significance | Community Reaction |
-|------|------------------------|-------------------|
-| [#22323](https://github.com/google-gemini/gemini-cli/issues/22323) | Subagent reports success after hitting `MAX_TURNS`, hiding actual interruption. Critical for agent reliability and debugging. | 13 comments, 2 👍 — P1 priority; affects subagent outcome transparency |
-| [#21409](https://github.com/google-gemini/gemini-cli/issues/21409) | Generalist agent hangs indefinitely. Users report hour-long waits. Affects core usability. | 8 comments, 8 👍 — High visibility; P1 severity |
-| [#19873](https://github.com/google-gemini/gemini-cli/issues/19873) | Request to leverage model’s native bash affinity via sandboxing and intent routing. Strategic shift toward safer, more efficient execution. | 9 comments, 1 👍 — P2, major architectural direction |
-| [#22745](https://github.com/google-gemini/gemini-cli/issues/22745) | Investigating AST-aware file reads/search for precision and token efficiency. Could reduce context bloat. | 7 comments, 1 👍 — Core R&D effort |
-| [#21968](https://github.com/google-gemini/gemini-cli/issues/21968) | Model ignores custom skills/sub-agents unless explicitly prompted. Undermines autonomy and extensibility. | 7 comments, 0 👍 — Anecdotal but widely observed |
-| [#22267](https://github.com/google-gemini/gemini-cli/issues/22267) | Browser Agent ignores `settings.json` overrides like `maxTurns`. Breaks configuration consistency. | 4 comments, 0 👍 — P2; impacts config-driven workflows |
-| [#21983](https://github.com/google-gemini/gemini-cli/issues/21983) | Browser subagent fails under Wayland. Blocks Linux users from using GUI features. | 4 comments, 1 👍 — Platform-specific regression |
-| [#29669](https://github.com/google-gemini/gemini-cli/issues/29669) | Login succeeds but CLI remains inaccessible post-auth. Confusing UX for new users. | 3 comments, 0 👍 — Recent issue; indicates auth flow fragility |
-| [#23571](https://github.com/google-gemini/gemini-cli/issues/23571) | Model generates temporary scripts in random directories, polluting workspace. Hinders clean commits. | 3 comments, 0 👍 — Developer hygiene concern |
-| [#22672](https://github.com/google-gemini/gemini-cli/issues/22672) | Model uses destructive Git commands (`reset --force`) without safe fallbacks. Risk of data loss. | 3 comments, 1 👍 — Safety-critical behavior |
+| [#22323](https://github.com/google-gemini/gemini-cli/issues/22323) | Subagent reports `GOAL success` despite hitting `MAX_TURNS`—hides interruptions during codebase investigation | 🔥 13 comments, 2 👍 – Critical for trust in autonomous agent behavior |
+| [#21409](https://github.com/google-gemini/gemini-cli/issues/21409) | Generalist agent hangs indefinitely after deferral—blocks all user interaction | 🔥 8 comments, 8 👍 – Major usability blocker; reported across multiple environments |
+| [#19873](https://github.com/google-gemini/gemini-cli/issues/19873) | Leverage model’s native bash affinity via zero-dependency OS sandboxing + intent routing | 🚀 9 comments, 1 👍 – Strategic direction to align with model training bias |
+| [#22745](https://github.com/google-gemini/gemini-cli/issues/22745) | Assess value of AST-aware file reads/search for precision and token efficiency | 🧠 7 comments, 1 👍 – Core research effort to reduce context bloat |
+| [#21968](https://github.com/google-gemini/gemini-cli/issues/21968) | Model fails to invoke custom skills/sub-agents autonomously despite relevance | 💡 7 comments, 0 👍 – Highlights gap between declarative skill setup and actual usage |
+| [#22267](https://github.com/google-gemini/gemini-cli/issues/22267) | Browser Agent ignores `settings.json` overrides like `maxTurns` | ⚠️ 4 comments, 0 👍 – Undermines user control over agent behavior |
+| [#21983](https://github.com/google-gemini/gemini-cli/issues/21983) | Browser subagent fails under Wayland environment | ⚠️ 4 comments, 1 👍 – Platform-specific regression affecting Linux users |
+| [#22672](https://github.com/google-gemini/gemini-cli/issues/22672) | Model uses destructive Git commands (`reset --force`) when safer alternatives exist | ⚠️ 3 comments, 1 👍 – Safety concern for production workflows |
+| [#22186](https://github.com/google-gemini/gemini-cli/issues/22186) | `get-shit-done` output hook causes crash mid-summary | 🔥 3 comments, 0 👍 – Frequent crash point in core flow |
+| [#20079](https://github.com/google-gemini/gemini-cli/issues/20079) | Symlinks in `~/.gemini/agents/` are not recognized as valid agents | ⚠️ 4 comments, 0 👍 – Hinders modular agent management |
 
 ---
 
@@ -455,16 +444,185 @@ The latest nightly release, `v0.65.0-nightly.20261008.g44d764ee5`, addresses cri
 
 | PR | Summary & Impact | Link |
 |----|------------------|------|
-| [#29675](https://github.com/google-gemini/gemini-cli/pull/29675) | Automated version bump for `0.65.0-nightly.20261008.g44d764ee5` | [PR #29675](https://github.com/google-gemini/gemini-cli/pull/29675) |
-| [#29674](https://github.com/google-gemini/gemini-cli/pull/29674) | Fixes `IdeServer.stop()` hanging when MCP sessions are active. Improves VS Code companion stability. | [PR #29674](https://github.com/google-gemini/gemini-cli/pull/29674) |
-| [#29670](https://github.com/google-gemini/gemini-cli/pull/29670) | Makes mid-stream retry backoff abort-aware. Prevents infinite retries during cancellation. | [PR #29670](https://github.com/google-gemini/gemini-cli/pull/29670) |
-| [#29673](https://github.com/google-gemini/gemini-cli/pull/29673) | Preserves line terminators and Unicode grapheme clusters in `truncateString`. Prevents text corruption. | [PR #29673](https://github.com/google-gemini/gemini-cli/pull/29673) |
-| [#29672](https://github.com/google-gemini/gemini-cli/pull/29672) | Eliminates false positives in untrusted flag warnings (e.g., `ls -ld`). Reduces noise and accidental halts. | [PR #29672](https://github.com/google-gemini/gemini-cli/pull/29672) |
-| [#29655](https://github.com/google-gemini/gemini-cli/pull/29655) | Fixes infinite OAuth verification loops. Solves a known authentication blocker. | [PR #29655](https://github.com/google-gemini/gemini-cli/pull/29655) |
-| [#29643](https://github.com/google-gemini/gemini-cli/pull/29643) | Clears cached credentials when re-selecting Google login. Enables account switching. | [PR #29643](https://github.com/google-gemini/gemini-cli/pull/29643) |
-| [#29658](https://github.com/google-gemini/gemini-cli/pull/29658) | Enhances `fetchJson` error handling: catches JSON parse errors and drains streams. Improves resilience. | [PR #29658](https://github.com/google-gemini/gemini-cli/pull/29658) |
-| [#29665](https://github.com/google-gemini/gemini-cli/pull/29665) | Surfaces clear error when gVisor sandbox blocks IDE server access. Better diagnostics. | [PR #29665](https://github.com/google-gemini/gemini-cli/pull/29665) |
-| [#29641](https://github.com/google-gemini/gemini-cli/pull/29641) | Adds support for custom OTLP headers in telemetry. Enables integration with enterprise monitoring stacks. | [PR #29641](https://github.com/google-gemini/gemini-cli/pull/29641) |
+| [#29679](https://github.com/google-gemini/gemini-cli/pull/29679) | ORVIA: Adopt cross-project execution workflow – enables multi-repo coordination | [PR #29679](https://github.com/google-gemini/gemini-cli/pull/29679) |
+| [#29678](https://github.com/google-gemini/gemini-cli/pull/29678) | Fix load-order race: Environment vars now loaded before resolving settings placeholders | [PR #29678](https://github.com/google-gemini/gemini-cli/pull/29678) |
+| [#29677](https://github.com/google-gemini/gemini-cli/pull/29677) | Retain `ask_user` question text in tool result display – improves UX clarity | [PR #29677](https://github.com/google-gemini/gemini-cli/pull/29677) |
+| [#29674](https://github.com/google-gemini/gemini-cli/pull/29674) | Ensure `IdeServer.stop()` resolves even during active MCP sessions – fixes hanging servers | [PR #29674](https://github.com/google-gemini/gemini-cli/pull/29674) |
+| [#29578](https://github.com/google-gemini/gemini-cli/pull/29578) | Fix OAuth refresh token loss for Google Workspace APIs – critical for enterprise integrations | [PR #29578](https://github.com/google-gemini/gemini-cli/pull/29578) |
+| [#29552](https://github.com/google-gemini/gemini-cli/pull/29552) | Report `GREP_EXECUTION_ERROR` metadata on ripgrep failures – improves debugging | [PR #29552](https://github.com/google-gemini/gemini-cli/pull/29552) |
+| [#29457](https://github.com/google-gemini/gemini-cli/pull/29457) | Fix binary asset inclusion in `read-many-files` via glob matching – prevents context bloat | [PR #29457](https://github.com/google-gemini/gemini-cli/pull/29457) |
+| [#29459](https://github.com/google-gemini/gemini-cli/pull/29459) | Propagate cancellation into shell command injections – stops hung subprocesses | [PR #29459](https://github.com/google-gemini/gemini-cli/pull/29459) |
+| [#29466](https://github.com/google-gemini/gemini-cli/pull/29466) | Prevent untrusted workspaces from wiping `settings.json` – security hardening | [PR #29466](https://github.com/google-gemini/gemini-cli/pull/29466) |
+| [#29670](https://github.com/google-gemini/gemini-cli/pull/29670) | Make mid-stream retry backoff abort-aware – ensures ESC cancels retries | [PR #29670](https://github.com/google-gemini/gemini-cli/pull/29670) |
+
+---
+
+### **5. Hot Discussions**  
+*No discussion threads were provided in the data source. This section is omitted.*
+
+---
+
+### **6. Feature Request Trends**  
+
+The community is converging on three major feature directions:
+
+1. **Agent Intelligence & Autonomy**  
+   - *Subagent discovery and intelligent invocation* ([#19873](https://github.com/google-gemini/gemini-cli/issues/19873), [#21968](https://github.com/google-gemini/gemini-cli/issues/21968))  
+   - *Better self-awareness*: ability to explain its own behavior, flags, and execution context ([#21432](https://github.com/google-gemini/gemini-cli/issues/21432))
+
+2. **Codebase Intelligence & Efficiency**  
+   - *AST-aware file operations* to improve precision and reduce token usage ([#22745](https://github.com/google-gemini/gemini-cli/issues/22745), [#22746](https://github.com/google-gemini/gemini-cli/issues/22746))  
+   - *Surgical, tactful extraction* to avoid context bloat ([#19561](https://github.com/google-gemini/gemini-cli/issues/19561))
+
+3. **Security & Reliability**  
+   - *Prevent destructive actions* (e.g., `git reset --force`) unless explicitly requested ([#22672](https://github.com/google-gemini/gemini-cli/issues/22672))  
+   - *Resilient session recovery* for browser and persistent agents ([#22232](https://github.com/google-gemini/gemini-cli/issues/22232), [#21763](https://github.com/google-gemini/gemini-cli/issues/21763))
+
+---
+
+### **7. Developer Pain Points**  
+
+Recurring frustrations include:
+
+- **Agent Hangs & Crashes**: The generalist agent hangs indefinitely ([#21409](https://github.com/google-gemini/gemini-cli/issues/21409)), and `get-shit-done` crashes mid-output ([#22186](https://github.com/google-gemini/gemini-cli/issues/22186)) – severely impacting workflow continuity.
+- **Configuration Drift & Inconsistency**: Browser agent ignores `settings.json` overrides ([#22267](https://github.com/google-gemini/gemini-cli/issues/22267)); symlinks not recognized in agent directories ([#20079](https://github.com/google-gemini/gemini-cli/issues/20079)).
+- **Context Bloat & Token Overhead**: Models frequently generate excessive scripts and read large binaries, inflating context cost ([#23571](https://github.com/google-gemini/gemini-cli/issues/23571), [#29457](https://github.com/google-gemini/gemini-cli/issues/29457)).
+- **Lack of Visibility**: Subagent trajectories are saved but not shareable or visible via `/chat share` ([#22598](https://github.com/google-gemini/gemini-cli/issues/22598)); error contexts are lost in `bug` reports ([#21763](https://github.com/google-gemini/gemini-cli/issues/21763)).
+
+---
+
+*Digest generated by AI Developer Tools Analyst | 2026-10-08*
+
+</details>
+
+<details>
+<summary><strong>GitHub Copilot CLI</strong> — <a href="https://github.com/github/copilot-cli">github/copilot-cli</a></summary>
+
+**GitHub Copilot CLI Community Digest — 2026-10-08**
+
+---
+
+### **1. Today's Highlights**  
+The latest release, **v1.0.94-3**, introduces support for **Claude Haiku 5.5** in model selection and `--model` completions, expanding AI model flexibility for developers. Critical fixes address clipboard handling in WSL2 (ARM64), session stability during split-view reconciliation, and improved policy enforcement for enterprise-managed environments, enhancing reliability and security.
+
+---
+
+### **2. Releases**  
+**v1.0.94-3** *(2026-10-07)*  
+- ✅ **Added**: Support for *Claude Haiku 5.5* in model selection and `--model` completions  
+- 🔧 **Fixed**: Policy warning shown when startup bypass-permission flags are suppressed by managed settings  
+
+**v1.0.94-2 / v1.0.94-1** *(2026-10-07)*  
+- Fixed: Reliable session switching in split-view reconciliation  
+- Improved: Update guidance shown when managed policies require a newer CLI version without blocking prompts  
+- Enhanced: Managed policies can now disable Assisted Permissions while keeping sessions in Manual Approval mode  
+
+**v1.0.93** *(2026-10-07)*  
+- Added: `permissions.limitTo` to enforce domain boundaries for network requests in enterprise environments  
+- Improved: Safe `/user` commands execute immediately during active turns; unsafe remote commands rejected without dialogs  
+- Introduced: Plugin skill lifecycle improvements
+
+---
+
+### **3. Hot Issues**  
+| Issue | Summary & Impact | Community Reaction |
+|------|------------------|--------------------|
+| [#5076](https://github.com/github/copilot-cli/issues/5076) | `/add-dir` fails to add directories to sandbox allow list — breaks sandboxed workflows | ⚠️ High impact: Affects local development security and usability |
+| [#5068](https://github.com/github/copilot-cli/issues/5068) | Windows Entra ID sign-in fails with "scopes could not be validated" on MCP servers | 🔥 Critical: Blocks enterprise access to Azure DevOps MCP servers |
+| [#4957](https://github.com/github/copilot-cli/issues/4957) | Workspace MCP servers blocked at startup due to misordered auth/policy resolution (v1.0.88+) | ⚠️ Major: Impacts enterprise users relying on managed policy |
+| [#3534](https://github.com/github/copilot-cli/issues/3534) | WSL2 (ARM64): `/copy` fails with `clip.exe exited with code 1` due to cmd.exe quoting bug | 🐞 Persistent: Affects ARM64 WSL users copying text from CLI |
+| [#4866](https://github.com/github/copilot-cli/issues/4866) | Ctrl-D in `ask_user` elicitation fields triggers session shutdown and discards input | ⚠️ UX Break: Prevents user recovery of partial input |
+| [#5075](https://github.com/github/copilot-cli/issues/5075) | No hook fired when turn is aborted via Ctrl+C/Esc — prevents agent state tracking | 💡 Feature request: Needed for plugin and automation logic |
+| [#4450](https://github.com/github/copilot-cli/issues/4450) | Assistant text before tool calls hidden in collapsed "Thought for…" block | 📝 UX: Reduces transparency in agent reasoning flow |
+| [#5073](https://github.com/github/copilot-cli/issues/5073) | Slash-command picker shows phantom skills mis-named under wrong plugins | 🛠️ Confusing: Leads to failed command execution and trust erosion |
+| [#5072](https://github.com/github/copilot-cli/issues/5072) | macOS app missing `NSLocalNetworkUsageDescription` blocks local subnet access | 🚨 Security: Prevents access to internal services like CI/CD runners |
+| [#5071](https://github.com/github/copilot-cli/issues/5071) | `/upgrade` on winget install overwrites alias but doesn’t update WinGet package record | 🔄 Installer issue: Causes confusion between installed version and actual binary |
+
+---
+
+### **4. Key PR Progress**  
+*(No new pull requests merged in last 24h — community contributions pending)*
+
+---
+
+### **5. Hot Discussions**  
+*No discussion threads were included in the provided data.*
+
+---
+
+### **6. Feature Request Trends**  
+Top feature directions emerging from open issues:  
+- **Model Flexibility & Control**: Users want mid-session context tier adjustment (`contextTier`) and persistent BYOK model retention (#3978, #4275).  
+- **Enterprise Policy Transparency**: Demand for clearer feedback when managed policies restrict features (e.g., `permissions.limitTo`, manual approval enforcement).  
+- **Improved Session Management**: Need for hooks on abort events (`agentStop` on Ctrl+C/Esc) and better visibility into which agent definition was loaded (#5075, #4956).  
+- **Plugin & Tool Integrity**: Requests for accurate skill namespace mapping and reliable plugin installation (#5073, #4937).  
+- **Cross-Platform Reliability**: Consistent clipboard, terminal, and networking behavior across WSL, Windows Terminal, and macOS.
+
+---
+
+### **7. Developer Pain Points**  
+Recurring frustrations include:  
+- **Clipboard instability** in WSL2 (ARM64) and inconsistent copy-paste behavior (#3534, #2285, #3172)  
+- **Unpredictable session termination** during input (Ctrl-D, Ctrl+C) without recovery options (#4866, #4955)  
+- **Broken or misleading UI elements** such as phantom skills in command picker (#5073) and hidden assistant messages (#4450)  
+- **Installer and upgrade inconsistencies** on Windows (winget vs. direct binary update) (#5071)  
+- **Missing entitlements on macOS** preventing access to local networks (#5072)  
+- **Lack of granular control** over agent configuration, especially in non-interactive and enterprise modes (#4275, #4956)
+
+---
+
+*Stay tuned for next week’s digest — follow [@github](https://github.com/github) for real-time updates.*
+
+</details>
+
+<details>
+<summary><strong>OpenCode</strong> — <a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></summary>
+
+**OpenCode Community Digest – 2026-10-08**
+
+---
+
+### **1. Today's Highlights**  
+The OpenCode community continues to grapple with the aftermath of the recent UI overhaul, as user frustration over the forced migration to a single-conversation interface intensifies. Critical stability issues in the TUI—particularly memory exhaustion and prompt handling bugs—are now receiving urgent attention from core contributors. Meanwhile, two key PRs have landed to address model selection failures and improve session continuity during compaction.
+
+---
+
+### **2. Releases**  
+*No new releases in the past 24 hours.*
+
+---
+
+### **3. Hot Issues**  
+
+| Issue | Summary & Impact | Community Reaction |
+|------|------------------|--------------------|
+| [#48882](https://github.com/anomalyco/opencode/issues/48882) | Request to restore legacy UI with persistent left sidebar as an opt-in option. A top-priority workflow regression for multi-project users. | 27 comments, 34 👍 — vocal demand for UI rollback or toggle |
+| [#5121](https://github.com/anomalyco/opencode/issues/5121) | Winget installation support needed; current version mismatch and unclear ownership of package. | 21 comments, 30 👍 — high visibility for Windows adoption |
+| [#51761](https://github.com/anomalyco/opencode/issues/51761) | TUI suffers intermittent OOM crashes (24–28GB RAM usage), no trigger identified. Critical for Linux/CI environments. | 12 comments, 2 👍 — indicates severe performance instability |
+| [#48888](https://github.com/anomalyco/opencode/issues/48888) | New layout breaks productivity for users managing 20+ sessions/projects. Repetitive navigation required. | 12 comments, 4 👍 — emotional frustration evident in tone |
+| [#48958](https://github.com/anomalyco/opencode/issues/48958) | UI redesign renders basic workflows unusable. Users report loss of essential context switching. | 11 comments, 13 👍 — clear usability regression |
+| [#48837](https://github.com/anomalyco/opencode/issues/48837) | "Old UI" toggle permanently removed; users trapped in new layout with no escape. | 6 comments, 19 👍 — highlights product design misstep |
+| [#53538](https://github.com/anomalyco/opencode/issues/53538) | GPT-6 Astra Ultrafast model rejected due to invalid `serviceTier` parameter. Blocks access to premium model. | 3 comments, 0 👍 — shows API-level compatibility gap |
+| [#53281](https://github.com/anomalyco/opencode/issues/53281) | Model selection broken in CLI/TUI: prompts insist on model selection despite UI not offering it. | 5 comments, 0 👍 — critical UX blocker for automation |
+| [#49005](https://github.com/anomalyco/opencode/issues/49005) | Layout sunset hardcodes new UI with no override for desktop users. Product decision without fallback. | 4 comments, 10 👍 — reflects growing distrust in irreversible changes |
+| [#49283](https://github.com/anomalyco/opencode/issues/49283) | Every CLI script spawns 13.7MB `libopentui.so` into `/tmp`, leading to disk exhaustion. | 4 comments, 0 👍 — serious risk in CI/automated pipelines |
+
+---
+
+### **4. Key PR Progress**  
+
+| PR | Summary & Impact | Link |
+|----|------------------|------|
+| [#53875](https://github.com/anomalyco/opencode/pull/53875) | Fixes OpenAI ultrafast service tier rejection by extending SDK patch to accept `serviceTier: "ultrafast"`. Enables use of fastest models. | [PR #53875](https://github.com/anomalyco/opencode/pull/53875) |
+| [#53863](https://github.com/anomalyco/opencode/pull/53863) | Resolves `/compact` interrupting queued prompts; ensures turn resumes correctly after compaction. | [PR #53863](https://github.com/anomalyco/opencode/pull/53863) |
+| [#53871](https://github.com/anomalyco/opencode/pull/53871) | Adds clickable agent/model/hints in TUI footer — enables quick action from UI elements. | [PR #53871](https://github.com/anomalyco/opencode/pull/53871) |
+| [#53877](https://github.com/anomalyco/opencode/pull/53877) | Standardizes message footer rendering across all message types in TUI. Improves consistency. | [PR #53877](https://github.com/anomalyco/opencode/pull/53877) |
+| [#53874](https://github.com/anomalyco/opencode/pull/53874) | Fixes canonical path preservation when moving sessions between directories. Prevents data loss. | [PR #53874](https://github.com/anomalyco/opencode/pull/53874) |
+| [#53872](https://github.com/anomalyco/opencode/pull/53872) | Sets default Vertex location to `global` to match Google’s Gen AI SDK defaults. | [PR #53872](https://github.com/anomalyco/opencode/pull/53872) |
+| [#53855](https://github.com/anomalyco/opencode/pull/53855) | Fixes `ENAMETOOLONG` errors in Windows by batching Git diffs differently. Critical for large repos. | [PR #53855](https://github.com/anomalyco/opencode/pull/53855) |
+| [#53869](https://github.com/anomalyco/opencode/pull/53869) | Adds error boundaries for attachment operations (paste, drag-drop). Improves UX resilience. | [PR #53869](https://github.com/anomalyco/opencode/pull/53869) |
+| [#53868](https://github.com/anomalyco/opencode/pull/53868) | Preserves startup prompt history even during async loading. Prevents prompt loss. | [PR #53868](https://github.com/anomalyco/opencode/pull/53868) |
+| [#53860](https://github.com/anomalyco/opencode/pull/53860) | Fixes LaTeX rendering in text by adjusting `$...$` delimiter logic. Ensures math displays properly. | [PR #53860](https://github.com/anomalyco/opencode/pull/53860) |
 
 ---
 
@@ -474,369 +632,200 @@ The latest nightly release, `v0.65.0-nightly.20261008.g44d764ee5`, addresses cri
 ---
 
 ### **6. Feature Request Trends**  
-The community is increasingly focused on **agent intelligence**, **security**, and **efficiency**:
-- **AST-aware codebase navigation** (Issues #22745, #22746) to reduce context bloat and improve precision.
-- **Native bash execution** via Zero-Dependency OS Sandboxing (#19873) to align with model training patterns.
-- **Improved agent self-awareness** (#21432) — users want the CLI to explain its own mechanics and flags.
-- **Persistent, file-based task tracking** (#18836, #21000) to replace fragile in-context todo lists.
-- **Visibility into subagent trajectories** (#22598) for better evaluation and debugging.
+The most consistent feature requests revolve around **UI flexibility and backward compatibility**:  
+- **Legacy UI revival**: Over 15 issues request restoration of the old layout, citing productivity loss in multi-session workflows.  
+- **Workspace support**: V2 UI lacks native workspace functionality despite existing SDK APIs (e.g., #39614).  
+- **Configurable keybinds**: Users want customizable prompt actions (e.g., #43088).  
+- **i18n readiness**: TUI currently has hardcoded English strings — users demand localization groundwork (#53857).  
+- **Plugin control**: Need for project-level plugin override and granular permission management (e.g., #53721).
 
 ---
 
 ### **7. Developer Pain Points**  
-Recurring frustrations include:
-- **Agent instability**: Hanging generalist agents (#21409), silent failures after `MAX_TURNS` (#22323).
-- **Configuration misbehavior**: Browser agent ignoring `settings.json` (#22267), OAuth flow inconsistencies (#29669, #29655).
-- **Security overreach**: False-positive warnings on harmless commands (#29672), accidental file uploads via `@path` expansion (#29458).
-- **Workspace pollution**: Uncontrolled temp script creation (#23571), leading to commit cleanup overhead.
-- **Lack of agent autonomy**: Model doesn’t use custom skills unless forced (#21968).
-
-These highlight a need for more robust state management, smarter defaults, and clearer feedback mechanisms.
-
-</details>
-
-<details>
-<summary><strong>GitHub Copilot CLI</strong> — <a href="https://github.com/github/copilot-cli">github/copilot-cli</a></summary>
-
-# GitHub Copilot CLI Community Digest — 2026-10-08
-
----
-
-### **1. Today's Highlights**  
-The latest release, **v1.0.94-3**, introduces support for **Claude Haiku 5.5** in model selection and `--model` completions, expanding AI model flexibility for developers. Critical improvements include enhanced session stability during split-view reconciliation and better policy handling when managed settings suppress startup permissions. Enterprise users now benefit from tighter network domain enforcement via `permissions.limitTo`.
-
----
-
-### **2. Releases**
-
-#### **v1.0.94-3 (2026-10-08)**  
-- ✅ **Added**: Support for **Claude Haiku 5.5** in model selection and `--model` completions.  
-- 🛠️ **Fixed**: Policy warning shown when startup bypass-permission flags are suppressed by managed policies.
-
-#### **v1.0.94-2 / v1.0.94-1**  
-- 🛠️ **Fixed**: Reliable session switching via sidebar rows during split-view reconciliation.
-
-#### **v1.0.94-0**  
-- 📈 **Improved**: Update guidance displayed when managed settings require a newer CLI version—without blocking prompts.  
-- 🔒 **Improved**: Managed policy can disable Assisted Permissions, keeping sessions in Manual Approval mode.
-
-#### **v1.0.93 (2026-10-07)**  
-- 🔐 **Added**: `enterprise.permissions.limitTo` to enforce managed domain boundaries for network requests.  
-- ⚙️ **Improved**: Safe `/user` commands now run immediately during active turns; unsafe remote commands are rejected without dialogs and queued if advertised by relay hosts.  
-- 🧩 **Improved**: Command sandboxing is now available to all users via `/sandbox` and `--sandbox`.  
-- 🛠️ **Fixed**: Duplicate fix for safe/unsafe command handling and plugin skill command execution.
-
----
-
-### **3. Hot Issues**
-
-| Issue # | Title | Why It Matters | Community Reaction |
-|--------|------|----------------|--------------------|
-| [#3534](https://github.com/github/copilot-cli/issues/3534) | WSL2 (ARM64): `/copy` fails with `clip.exe exited with code 1` | Breaks clipboard functionality on ARM64 WSL2 — critical for cross-platform workflows. | 👍 6, 8 comments |
-| [#2285](https://github.com/github/copilot-cli/issues/2285) | Copying commands includes invisible characters | Causes "command not found" errors in external terminals — undermines usability of Copilot-generated scripts. | 👍 10, closed |
-| [#3172](https://github.com/github/copilot-cli/issues/3172) | "Somebody else is owning the clipboard" message | UI disruption due to clipboard ownership conflicts — affects UX clarity. | 👍 14, closed |
-| [#4652](https://github.com/github/copilot-cli/issues/4652) | Sandbox unsupported on latest Windows 25H2 build | Blocks sandboxing on new OS versions — limits security and isolation capabilities. | 👍 0, closed |
-| [#4991](https://github.com/github/copilot-cli/issues/4991) | Cloudflare MCP: "Subscription limit reached" after OAuth | Prevents access to remote tools despite successful auth — impacts enterprise integration. | 👍 0, open |
-| [#5076](https://github.com/github/copilot-cli/issues/5076) | `/add-dir` does not add directory to sandbox allow list | Undermines sandbox policy enforcement — security risk if paths aren't properly whitelisted. | 👍 0, open |
-| [#5066](https://github.com/github/copilot-cli/issues/5066) | Assisted permissions regression: too many approvals needed | Users report excessive permission prompts — breaks workflow efficiency. | 👍 1, open |
-| [#5068](https://github.com/github/copilot-cli/issues/5068) | Windows: Entra sign-in fails with scope validation error | Blocks access to Microsoft-hosted MCP servers — major issue for enterprise environments. | 👍 8, open |
-| [#5028](https://github.com/github/copilot-cli/issues/5028) | `create_pull_request` fails with "runtime settings not configured" despite success | False error disrupts automation workflows — misleading feedback. | 👍 0, open |
-| [#5072](https://github.com/github/copilot-cli/issues/5072) | macOS Copilot.app missing `NSLocalNetworkUsageDescription` | Silently blocks local subnet access — prevents connection to internal MCP servers. | 👍 0, open |
-
----
-
-### **4. Key PR Progress**  
-*No pull requests were updated in the last 24 hours.*
-
----
-
-### **5. Hot Discussions**  
-*No discussion threads were provided in the data source.*
-
----
-
-### **6. Feature Request Trends**  
-Top feature directions emerging from issues:
-
-- **Enhanced sandbox control**: Users demand reliable path allowance (`/add-dir`), proper policy application, and consistent isolation across platforms.  
-- **Improved context & memory management**: Requests for faster context reconstruction, smarter caching, and agent-driven `/compact` suggestions while cache is warm.  
-- **Better tool lifecycle visibility**: Need to distinguish between "no tools found" vs. "tools registering" — avoid false negatives in `tool_search_tool`.  
-- **Enterprise-grade security & compliance**: Strong interest in domain-bound network policies (`permissions.limitTo`), Entra ID integration, and audit-ready usage tracking.  
-- **Seamless CLI interaction**: Demand for stable keyboard shortcuts (Ctrl+C, Ctrl+D), no accidental session termination, and consistent terminal keybinding behavior.
-
----
-
-### **7. Developer Pain Points**  
-Recurring frustrations reported by the community:
-
-- **Clipboard reliability issues** on WSL2 (ARM64) and Windows, especially with `/copy` and invisible character injection.  
-- **Overly aggressive permission prompts** in Assisted Permissions mode — perceived regression in usability.  
-- **Sandbox misbehavior** despite correct configuration: path allowances ignored, `git status` failures, and silent access denials.  
-- **Inconsistent tool discovery**: Tools fail to appear even when registered, or return "No tools found" when they exist but haven’t fully initialized.  
-- **OS-specific bugs**: macOS app lacks required entitlements (`NSLocalNetworkUsageDescription`), Windows 25H2 breaks sandboxing, and winget updates corrupt package records.  
-- **Lack of feedback on session state**: No hook fires when user aborts a turn (Ctrl+C/Esc), making it hard for integrations to detect idle state.
-
-> 💡 *Developer sentiment indicates growing need for predictable, secure, and low-friction CLI behavior — especially in enterprise and multi-platform environments.*
-
-</details>
-
-<details>
-<summary><strong>OpenCode</strong> — <a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></summary>
-
-# OpenCode Community Digest — 2026-10-08
-
----
-
-### **1. Today's Highlights**  
-The OpenCode community is actively addressing critical UX and stability issues, particularly around clipboard functionality, session resilience, and model switching behavior. A surge in recent PRs focuses on improving localization parity (zh/zht), enhancing session recovery, and fixing UI/UX inconsistencies in both desktop and TUI environments.
-
----
-
-### **2. Releases**  
-*No new releases detected in the past 24 hours.*
-
----
-
-### **3. Hot Issues**  
-
-| Issue | Summary & Impact | Community Reaction |
-|------|------------------|--------------------|
-| [#4283](https://github.com/anomalyco/opencode/issues/4283) `Copy To Clipboard is not working` | Users cannot copy text from responses despite selecting it—critical for productivity. Affects all platforms. | 🔥 **140 comments**, **130 likes**—highest engagement of the day. |
-| [#53776](https://github.com/anomalyco/opencode/issues/53776) `OpenCode Go subscription active, but all opencode-go models return Unexpected server error` | Paid users blocked from using Go models despite valid subscriptions—serious trust issue. | 🔥 **7 comments**, multiple users reporting identical symptoms. |
-| [#53829](https://github.com/anomalyco/opencode/issues/53829) `ECONNRESET: The socket connection was closed unexpectedly` | Intermittent network disconnects during sessions; hard to reproduce but disruptive. | 🛠️ 4 comments, suspected upstream or proxy misconfiguration. |
-| [#52269](https://github.com/anomalyco/opencode/issues/52269) `Intermittent OpenAI Service Unavailable: upstream connection failure` | Random failures across models and sessions—rebooting helps temporarily. | 🔥 10 comments, affecting core reliability. |
-| [#47553](https://github.com/anomalyco/opencode/issues/47553) `sidecar process crashes with OOM - JavaScript heap out of memory` | Desktop app crashes due to unbounded memory growth—especially on Windows. | 🔥 5 comments, high visibility due to system-level instability. |
-| [#51223](https://github.com/anomalyco/opencode/issues/51223) `permissions: asks from MCP tools inside Code Mode never surface in the TUI` | Tool permission prompts hang silently—user must interrupt manually. Breaks workflow transparency. | ⚠️ 7 comments, critical for safety and control. |
-| [#53806](https://github.com/anomalyco/opencode/issues/53806) `--model is ignored when resuming a session with --session` | Model override flag fails during session resume—breaks scripting workflows. | 🔥 3 comments, confirmed by multiple contributors. |
-| [#53799](https://github.com/anomalyco/opencode/issues/53799) `acp: session/new via Zed fails, Database is not empty and has no session table` | Zed integration broken—blocks external agent use. | 🛠️ 3 comments, urgent for developers using Zed. |
-| [#52837](https://github.com/anomalyco/opencode/issues/52837) `[FEATURE]: Add a skip field to tool.execute.before` | Request for deterministic pre-execution gating—important for safe automation. | 💡 9 comments, strong alignment with AI agent design patterns. |
-| [#51818](https://github.com/anomalyco/opencode/issues/51818) `Compaction keeps reasoning text in recent, which can make context bigger than before compaction` | Compaction logic defeats its purpose—reasoning grows context instead of reducing it. | ⚠️ 4 comments, impacts performance and cost. |
-
----
-
-### **4. Key PR Progress**  
-
-| PR | Summary & Impact | Status |
-|----|------------------|--------|
-| [#53838](https://github.com/anomalyco/opencode/pull/53838) `fix(tui): keep --model when resuming a session with --session` | Fixes critical regression where `--model` was ignored on resume. Enables reliable scripting. | ✅ **Closed** |
-| [#53832](https://github.com/anomalyco/opencode/pull/53832) `fix(app): anchor revealed tools under the sticky headers` | Ensures shell selection scrolls into view—improves usability in long menus. | ✅ **Closed** |
-| [#53826](https://github.com/anomalyco/opencode/pull/53826) `fix: surface session execution errors in desktop and TUI timelines` | Makes failed tool executions visible in UI timelines—prevents silent hangs. | ✅ **Closed** |
-| [#52000](https://github.com/anomalyco/opencode/pull/52000) `feat(tui): add per-locale i18n infrastructure and wire UI strings` | Lays foundation for full multilingual support in TUI. | 🔧 **Open** |
-| [#53837](https://github.com/anomalyco/opencode/pull/53837) `feat(cli): pair remotely through OpenTunnel` | Enables remote pairing via secure tunnel—key for distributed teams. | 🔧 **Open** |
-| [#53641](https://github.com/anomalyco/opencode/pull/53641) `feat(session-ui): deterministic timeline file link detection and resolution` | Links in timeline now only resolve if file exists—reduces false positives. | 🔧 **Open** |
-| [#53503](https://github.com/anomalyco/opencode/pull/53503) `docs: add Ace Data Cloud provider connection guide` | Adds official setup steps for a growing third-party provider. | ✅ **Closed** |
-| [#51983](https://github.com/anomalyco/opencode/pull/51983) `fix(i18n): align zh/zht translations with established terminology` | Corrects inconsistent Chinese translation terms. | ✅ **Closed** |
-| [#52040](https://github.com/anomalyco/opencode/pull/52040) `fix(i18n): add missing zh/zht translations for pairing, provider connect, and file viewer` | Eliminates fallback to English in Chinese UI—full parity achieved. | ✅ **Closed** |
-| [#50835](https://github.com/anomalyco/opencode/pull/50835) `refactor(i18n): add locale dictionary parity tests` | Prevents future drift between language files—enforces consistency. | ✅ **Closed** |
-
----
-
-### **5. Hot Discussions**  
-*No discussion threads provided in the data source.*
-
----
-
-### **6. Feature Request Trends**  
-The most prominent feature directions emerging from issues and PRs include:
-
-- **Enhanced Session Control**: Users demand more granular control over session lifecycle (e.g., `--model` persistence, retry mechanisms).
-- **Improved Tool & Agent Visibility**: Clearer feedback on running subagents, permission prompts, and tool execution status.
-- **Localization Maturity**: Strong push for complete, accurate Chinese (zh/zht) translations and automated parity checks.
-- **Remote & Distributed Workflows**: Demand for remote pairing (`OpenTunnel`) and stable integration with editors like Zed.
-- **Deterministic Execution**: Requests for skip/gating controls in tool execution pipelines (e.g., `tool.execute.before.skip`).
-
-These reflect a maturing ecosystem focused on reliability, security, and global accessibility.
-
----
-
-### **7. Developer Pain Points**  
-Recurring frustrations highlighted across the tracker:
-
-- **Silent Failures**: Permission requests and tool calls hang without feedback (#51223).
-- **Model Switching Instability**: `muse-spark-1.3-contributor-free` fails mid-session after model switch (#48805).
-- **Memory Leaks**: Desktop sidecar crashes due to unbounded heap growth (#47553).
-- **Session Corruption**: Malformed tool results or service restarts leave sessions in unrecoverable states (#50775, #52452).
-- **Incomplete Configuration Handling**: `timeout: false` ignored in local providers (#26602); `agent.compaction.variant` config ignored (#41578).
-- **Poor Error Surface**: Lack of actionable error messages (e.g., "Unexpected server error" with no root cause).
-
-These indicate ongoing challenges in error handling, state management, and configuration robustness—key focus areas for v2 stabilization.
+Recurring frustrations include:  
+- **Irreversible UI changes**: Users feel forced into a new layout with no escape hatch, violating trust in user autonomy.  
+- **TUI memory leaks and OOM kills**: Unpredictable 500MB/s–1GB/s growth causes system instability.  
+- **CLI automation breakage**: `opencode run` hangs indefinitely if stdin is not EOF — breaks scripts (e.g., #52938).  
+- **Missing model selection UI**: Despite model availability, users cannot select them via CLI/TUI (e.g., #53281).  
+- **Disk space exhaustion**: Repeated `.so` file leaks into `/tmp` cause filesystem failure (e.g., #49283, #42700).  
+- **Billing & entitlement sync issues**: Paid subscriptions not recognized despite confirmed payments (e.g., #39989, #51789).
 
 ---  
-*Digest generated: 2026-10-08 | Source: [anomalyco/opencode GitHub](https://github.com/anomalyco/opencode)*
+*Digest generated: 2026-10-08 | Source: [anomalyco/opencode](https://github.com/anomalyco/opencode)*
 
 </details>
 
 <details>
 <summary><strong>Pi</strong> — <a href="https://github.com/earendil-works/pi">earendil-works/pi</a></summary>
 
-# Pi Community Digest – 2026-10-08
+# **Pi Community Digest – 2026-10-08**
 
 ---
 
-### **1. Today's Highlights**
-
-The Pi ecosystem released **v1.1.0**, introducing **Program Status Reporting via OSC 7501**, enabling terminals and agent dashboards to track real-time agent states (working, blocked, done, failed). This release also resolves critical issues around model availability, OAuth flow reliability, and session memory management, marking a significant step toward production-grade AI developer tooling.
-
----
-
-### **2. Releases**
-
-**v1.1.0**  
-- ✅ **Program Status Reporting (OSC 7501)**: Enables external terminals and dashboards to monitor Pi’s execution state without parsing output or window titles. See [terminal-setup.md](https://github.com/earendil-works/pi/blob/v1.1.0/packages/coding-agent/docs/terminal-setup.md#program-status).
-- 🔧 Fixed multiple edge cases in model selection, OAuth flows, and session compaction.
-- 🛠️ Improved error handling for rate-limited APIs and stale extension contexts.
+### **1. Today's Highlights**  
+The Pi ecosystem saw a major leap in observability with the release of **v1.1.0**, introducing **Program Status Reporting via OSC 7501**—enabling terminals and agent dashboards to accurately track Pi’s state (working, blocked, done, failed). This update is critical for CI/CD integration and developer workflow transparency. Meanwhile, high-priority bugs related to OpenAI OAuth, cost calculation on OpenRouter, and model availability persist, indicating ongoing challenges in third-party API stability and pricing fidelity.
 
 ---
 
-### **3. Hot Issues**
+### **2. Releases**  
+**v1.1.0** – *Released October 7, 2026*  
+- **New Feature**: Program status reporting via [OSC 7501](https://github.com/earendil-works/pi/blob/v1.1.0/packages/coding-agent/docs/terminal-setup.md#program-status)  
+  Enables real-time visibility into Pi’s execution state (e.g., “blocked on login”, “thinking”) without parsing terminal output or window titles. A foundational upgrade for tooling integrations and agent monitoring.  
+- **Impact**: Critical for developers using Pi in automated workflows, IDE extensions, and terminal-based agents.
+
+---
+
+### **3. Hot Issues**  
 
 | Issue | Summary & Impact | Community Reaction |
 |------|------------------|--------------------|
-| [#10480](https://github.com/earendil-works/pi/issues/10480) | Direct OpenAI connection fails to recognize manual usage reset (ChatGPT Pro 100 plan). Users must re-login after banked resets. | ⭐ 16 comments, 0 likes – high urgency; workaround confirmed but disruptive. |
-| [#10605](https://github.com/earendil-works/pi/issues/10605) | OpenAI OAuth returns `403: subscription_sharing_user_not_eligible` despite valid Plus tier subscription. | ⭐ 3 comments – indicates potential API policy drift or token validation bug. |
-| [#10642](https://github.com/earendil-works/pi/issues/10642) | Embedded SDK sessions retain full memory indefinitely due to unbounded file loading. Critical for long-lived server processes. | ⭐ 2 comments – major scalability concern for embedded agents. |
-| [#9602](https://github.com/earendil-works/pi/issues/9602) | Compaction overflows by including thinking messages omitted from prior model requests — leads to token limit errors during long sessions. | ⭐ 7 comments – core issue for local LLM users with Qwen3.8 via llama.cpp. |
-| [#10267](https://github.com/earendil-works/pi/issues/10267) | Prompt text from `before_agent_start` is dropped on non-user-triggered runs (e.g., retries), leading to re-billing of entire prompt. | ⭐ 7 comments – impacts cost tracking and extension reliability. |
-| [#10631](https://github.com/earendil-works/pi/issues/10631) | `timeout_ms` in `@options` is ignored in codemode scripts — no hard deadline enforcement. | ⭐ 2 comments – undermines safety and control in sandboxed environments. |
-| [#10630](https://github.com/earendil-works/pi/issues/10630) | GitHub Copilot’s `claude-haiku-5.5` missing post-catalog refresh despite being active in `/models` endpoint. | ⭐ 2 comments – suggests metadata sync issue between provider and client. |
-| [#10629](https://github.com/earendil-works/pi/issues/10629) | Request for compressed session files (e.g., gzip/jsonl) to reduce disk footprint. | ⭐ 2 comments – growing concern as session size scales. |
-| [#10623](https://github.com/earendil-works/pi/issues/10623) | `pi -p` silently falls back to another model when extension catalog is stale; `pi update --models` skips extension catalogs. | ⭐ 2 comments – breaks predictable behavior in custom provider setups. |
-| [#10599](https://github.com/earendil-works/pi/issues/10599) | `reload()` invalidates extension runner before replacement — causes `stale-ctx` errors that become visible tool results. | ⭐ 2 comments – highlights fragile extension lifecycle management. |
+| [#10480](https://github.com/earendil-works/pi/issues/10480) | Direct OpenAI connection fails to recognize manual usage limit resets despite valid subscription. Users must logout/login again. | 16 comments, 0 upvotes — signals deep frustration with rate-limit handling; recurring issue across multiple accounts. |
+| [#9980](https://github.com/earendil-works/pi/issues/9980) | OpenRouter cost estimates are off by 2–3x due to pricing based on cheapest provider, not actual one used. | 5 comments, 1 upvote — highlights a systemic flaw in cost transparency; affects budget-sensitive users. |
+| [#10605](https://github.com/earendil-works/pi/issues/10605) | OpenAI OAuth 403 error: "subscription_sharing_user_not_eligible" even after re-login. | 3 comments — indicates potential backend policy changes breaking existing auth flows. |
+| [#10563](https://github.com/earendil-works/pi/issues/10563) | Google MCP OAuth lacks `access_type=offline` support → no refresh token issued. | 4 comments — essential for long-lived Google integrations (Gmail, Calendar); blocks persistent access. |
+| [#10648](https://github.com/earendil-works/pi/issues/10648) | `ctx.ui.custom().done()` closes wrong overlay when multiple are open. | 2 comments — UI regression affecting extension developers building complex overlays. |
+| [#10642](https://github.com/earendil-works/pi/issues/10642) | Embedded SDK sessions never drop memory — entries stay resident post-compaction. | 2 comments — serious concern for server-side deployments (e.g., OAR); leads to memory bloat. |
+| [#10637](https://github.com/earendil-works/pi/issues/10637) | Missing `TOO_MANY_TOOL_CALLS` case in `mapStopReason` for Google GenAI. | 2 comments — breaks type safety and crashes `npm run check`; urgent fix needed. |
+| [#10640](https://github.com/earendil-works/pi/issues/10640) | Middle-click swallowed in fullscreen TUI; no fallback for paste or legacy components. | 2 comments — impacts usability in productivity tools; affects key workflows. |
+| [#10649](https://github.com/earendil-works/pi/issues/10649) | `openai-responses` replay omits `logprobs`, causing 400 errors. | 1 comment — subtle but critical for reproducibility and debugging. |
+| [#10645](https://github.com/earendil-works/pi/issues/10645) | `resizeImage` returns `null` in compiled Bun executables → image attachments lost. | 1 comment — blocks deployment of production-grade binaries; platform-specific regression. |
 
 ---
 
-### **4. Key PR Progress**
+### **4. Key PR Progress**  
 
-| PR | Summary & Impact | Link |
-|----|------------------|------|
-| [#10569](https://github.com/earendil-works/pi/pull/10569) | Filters OpenRouter models based on active key’s guardrails via `GET /api/v1/models/user`. Prevents unusable model exposure. | [PR #10569](https://github.com/earendil-works/pi/pull/10569) |
-| [#8307](https://github.com/earendil-works/pi/pull/8307) | Enables experimental cache-friendly compaction — reduces compaction costs by reusing warm session caches. | [PR #8307](https://github.com/earendil-works/pi/pull/8307) |
-| [#10615](https://github.com/earendil-works/pi/pull/10615) | Fixes `read` tool’s unvalidated `limit`, preventing negative/fractional continuation offsets. | [PR #10615](https://github.com/earendil-works/pi/pull/10615) |
-| [#10617](https://github.com/earendil-works/pi/pull/10617) | Clears fullscreen selection on prompt change — prevents visual glitches during editing. | [PR #10617](https://github.com/earendil-works/pi/pull/10617) |
-| [#10619](https://github.com/earendil-works/pi/pull/10619) | Same fix as #10617 — ensures selection state updates correctly with input changes. | [PR #10619](https://github.com/earendil-works/pi/pull/10619) |
-| [#10600](https://github.com/earendil-works/pi/pull/10600) | Respects `Retry-After` headers in agent-level retries — avoids hammering rate-limited servers. | [PR #10600](https://github.com/earendil-works/pi/pull/10600) |
-| [#10593](https://github.com/earendil-works/pi/pull/10593) | Adds `muse-code/pi` User-Agent to Meta OAuth requests — fixes intermittent `503 service_overloaded` errors. | [PR #10593](https://github.com/earendil-works/pi/pull/10593) |
-| [#10596](https://github.com/earendil-works/pi/pull/10596) | Stops padding rendered lines with trailing spaces — fixes copy-paste corruption in terminal output. | [PR #10596](https://github.com/earendil-works/pi/pull/10596) |
-| [#10590](https://github.com/earendil-works/pi/pull/10590) | Makes `@earendil-works/pi-mcp` available as host-provided module — enables extension imports without duplication. | [PR #10590](https://github.com/earendil-works/pi/pull/10590) |
-| [#10521](https://github.com/earendil-works/pi/pull/10521) | Inlines `$ref` tool schemas for NVIDIA NIM models — fixes validation failure on schema references. | [PR #10521](https://github.com/earendil-works/pi/pull/10521) |
-
----
-
-### **5. Hot Discussions**
-
-> ❌ *No new discussions were posted in the last 24 hours. The discussion section is currently inactive.*
+| PR | Summary | Link |
+|----|--------|------|
+| [#10646](https://github.com/earendil-works/pi/pull/10646) | Fixes MCP tool registration race: register before resource enumeration to avoid stale state. | [PR #10646](https://github.com/earendil-works/pi/pull/10646) |
+| [#10590](https://github.com/earendil-works/pi/pull/10590) | Adds `@earendil-works/pi-mcp` to `VIRTUAL_MODULES` and `HOST_PROVIDED_EXTENSION_PACKAGES` so extensions can import it. | [PR #10590](https://github.com/earendil-works/pi/pull/10590) |
+| [#10521](https://github.com/earendil-works/pi/pull/10521) | Inlines `$ref` tool schemas for NVIDIA NIM models to prevent validation failures. | [PR #10521](https://github.com/earendil-works/pi/pull/10521) |
+| [#10569](https://github.com/earendil-works/pi/pull/10569) | Filters OpenRouter models by active key’s guardrails via `GET /api/v1/models/user`. | [PR #10569](https://github.com/earendil-works/pi/pull/10569) |
+| [#10615](https://github.com/earendil-works/pi/pull/10615) | Normalizes pagination params in `read` tool to prevent negative/fractional offsets. | [PR #10615](https://github.com/earendil-works/pi/pull/10615) |
+| [#10619](https://github.com/earendil-works/pi/pull/10619) | Clears fullscreen selection when prompt text changes to avoid visual glitches. | [PR #10619](https://github.com/earendil-works/pi/pull/10619) |
+| [#10617](https://github.com/earendil-works/pi/pull/10617) | Same as #10619 — fixes same issue with editor selection persistence. | [PR #10617](https://github.com/earendil-works/pi/pull/10617) |
+| [#10600](https://github.com/earendil-works/pi/pull/10600) | Honors `Retry-After` headers in agent-level retries to avoid hammering rate-limited APIs. | [PR #10600](https://github.com/earendil-works/pi/pull/10600) |
+| [#10528](https://github.com/earendil-works/pi/pull/10528) | Refactors Nix packaging: cleaner `package.nix`, removes unnecessary files, uses `makeBinaryWrapper`. | [PR #10528](https://github.com/earendil-works/pi/pull/10528) |
+| [#10614](https://github.com/earendil-works/pi/pull/10614) | Adds footer options for compact rows and hidden model suffixes — enables fine-grained control over TUI display. | [PR #10614](https://github.com/earendil-works/pi/pull/10614) |
 
 ---
 
-### **6. Feature Request Trends**
+### **5. Hot Discussions**  
+*(Only 1 discussion in last 24h)*
 
-Based on recurring themes across Issues and PRs:
-
-- **Session Management & Efficiency**: Demand for **compressed session storage**, **memory-efficient compaction**, and **long-lived session durability**.
-- **Developer Experience Enhancements**: Requests for **project-level skill configuration (`--no-skills`/`--skill` in `.pi/settings.json`)** and **customizable footer components**.
-- **Reliability & Visibility**: High interest in **real-time program status reporting (OSC 7501)**, **better error visibility**, and **transparent retry logic**.
-- **Model & Provider Control**: Growing need for **per-provider model filtering**, **offline model fallbacks**, and **extension catalog consistency**.
-- **Human-in-the-Loop Workflows**: Clear demand for **pausable tool calls with human approval** (see Discussion #10632), indicating interest in safer, audit-ready automation.
-
----
-
-### **7. Developer Pain Points**
-
-Recurring frustrations reported by developers:
-
-- **Unreliable model selection**: Extensions or providers failing to reflect up-to-date model availability (e.g., missing `claude-haiku-5.5`).
-- **Opaque error handling**: Errors like `subscription_sharing_user_not_eligible` or `stale-ctx` appear without clear resolution paths.
-- **Memory bloat in long-running sessions**: Embedded SDKs accumulate memory due to unbounded file loading (`SessionManager` keeps all entries in memory).
-- **Inconsistent behavior across triggers**: `before_agent_start` prompts lost on background tasks; `timeout_ms` ignored in codemode.
-- **Fragile extension lifecycle**: `reload()` and `session replacement` causing silent failures or corrupted state.
-- **Copy-paste UX issues**: Accidental clipboard overwrite on mouse hover (`copy-on-select`) and trailing space padding in terminal output.
+#### **Ideas**
+- [#10632](https://github.com/earendil-works/pi/discussions/10632) **Pausing a run on a tool call until human approval (no memory retention)**  
+  > *“The model calls a tool → run pauses → user approves/denies hours later → run resumes.”*  
+  - **Why it matters**: Enables safe, auditable automation (e.g., production deployments, financial actions) without storing sensitive data in memory.  
+  - **Community reaction**: 1 comment, 1 upvote — seen as a high-value, low-risk feature for enterprise use cases.
 
 ---
 
-*Digest compiled from GitHub data at 2026-10-08. For full context, visit [github.com/earendil-works/pi](https://github.com/earendil-works/pi).*
+### **6. Feature Request Trends**  
+Based on top issues and discussions, the following themes dominate community demand:
+- **Enhanced observability & control**: Program status (OSC 7501), runtime pause/resume, and better session lifecycle management.
+- **Secure, persistent auth**: Google/MCP OAuth refresh tokens, proper `access_type=offline` support.
+- **Cost accuracy**: Transparent, provider-specific cost estimation (especially on OpenRouter).
+- **Extension flexibility**: Opt-in namespaces (`pi.namespace`), better TUI controls (footers, widgets), and consistent behavior across environments.
+- **Reliability under load**: Memory management in embedded SDKs, retry logic respecting `Retry-After`, and stable model catalog sync.
+
+---
+
+### **7. Developer Pain Points**  
+Recurring frustrations include:
+- **API instability**: OAuth failures (OpenAI, Google), unexpected rate-limiting, and model unavailability (e.g., `claude-haiku-5.5` missing).
+- **Poor error feedback**: Silent failures, vague messages (e.g., "subscription_sharing_user_not_eligible"), and lack of context in errors.
+- **Memory leaks**: Long-running sessions (especially in embedded SDKs) fail to clean up state or compaction doesn’t reduce memory.
+- **Tooling inconsistencies**: `resizeImage` broken in builds, middle-click ignored, `logprobs` dropped in replays.
+- **Configuration opacity**: No way to opt out of features like copy-on-select or control footer layout without full component override.
+
+These indicate a need for stronger runtime guarantees, better error diagnostics, and more granular configuration options in future releases.
+
+---  
+*Digest generated from GitHub data at 2026-10-08T00:00Z.*
 
 </details>
 
 <details>
 <summary><strong>Qwen Code</strong> — <a href="https://github.com/QwenLM/qwen-code">QwenLM/qwen-code</a></summary>
 
-# Qwen Code Community Digest – 2026-10-08
+# Qwen Code Community Digest — 2026-10-08
+
+## Today's Highlights
+The Qwen Code team made significant progress on the **Managed Agent dual-path architecture**, with multiple PRs advancing the H5b/H5c channel runtime and persistent automation definitions. Critical fixes were merged to preserve cancellation intent during session recovery and improve security around shell command sanitization, while ongoing work focuses on stabilizing Kubernetes-based tool runtime delivery and resolving long-standing issues in token management and agent host replacement.
 
 ---
 
-### **1. Today's Highlights**  
-The Qwen Code team advanced core session durability and multi-agent architecture with new PRs for managed agent staging (H5b/H5c, H4b), while addressing critical security and UX issues in the web-shell and CLI. Key progress includes improved recovery semantics, enhanced tool output handling, and deeper integration of Kubernetes-based runtime foundations.
-
----
-
-### **2. Releases**  
+## Releases  
 **v0.25.0-nightly.20261007.8003d28042**  
-*Released today*  
-- Fixed: Agent host replacement without losing bindings (`fix(agents)`).  
-- Test: Closed issue #126  
-This nightly release focuses on stability improvements and foundational support for upcoming managed agent features.
+- Fixed: Agent Host replacement now checks that a new host supports previously pinned providers (#13644)  
+- Fixed: Prevented loss of bindings when replacing remote hosts (#13430)  
+- Test: Closed issue #126 (internal test cleanup)  
+
+> [Release v0.25.0-nightly.20261007.8003d28042](https://github.com/QwenLM/qwen-code/releases/tag/v0.25.0-nightly.20261007.8003d28042)
 
 ---
 
-### **3. Hot Issues**  
+## Hot Issues  
+
 | Issue | Summary & Significance | Community Reaction |
 |------|------------------------|--------------------|
-| [#12380](https://github.com/QwenLM/qwen-code/issues/12380) | Proposal for dual-path Managed Agent architecture enabling durable sessions, stable workspace bindings, and recoverable tool execution. A cornerstone for future multi-agent systems. | 🔥 49 comments – actively shaping platform roadmap |
-| [#12867](https://github.com/QwenLM/qwen-code/issues/12867) | Follow-up to #12380 covering Stage D: durable lifecycle, Turns, Actions, `java_durable` admission, and `AgentDefinition`. Critical for production-grade agent resilience. | 🔥 18 comments – key milestone in agent maturity |
-| [#13395](https://github.com/QwenLM/qwen-code/issues/13395) | Tracking Kubernetes tool runtime progress; draft PR #13526 now under review. Central to cross-platform deployment ambitions. | 🔥 15 comments – high visibility in platform distribution efforts |
-| [#13570](https://github.com/QwenLM/qwen-code/issues/13570) | Auto mode blocks inert text mentioning "amend" phrase, even when user hasn’t asked — no escape hatch. Security risk if misinterpreted. | 🔥 6 comments – flagged as P2 severity; urgent fix needed |
-| [#13566](https://github.com/QwenLM/qwen-code/issues/13566) | Web-shell approval card leaves sibling model-supplied text unsanitized. Potential XSS vector. | 🔥 6 comments – merged PR #13578 already fixes this |
-| [#10887](https://github.com/QwenLM/qwen-code/issues/10887) | Sessions burn 5–14M tokens in dead-end loops due to missing early termination. High cost, low value. | 🔥 10 comments – P1 bug impacting efficiency and billing |
-| [#6710](https://github.com/QwenLM/qwen-code/issues/6710) | User-cancelled turns vs unexpected interruption after restore not distinguished. Breaks cancellation intent logic. | 🔥 12 comments – ongoing verification; still reproducible |
-| [#13513](https://github.com/QwenLM/qwen-code/issues/13513) | System settings env override honored without file ownership check — potential privilege escalation. | 🔥 5 comments – security-sensitive; requires policy enforcement |
-| [#13597](https://github.com/QwenLM/qwen-code/issues/13597) | Subagent error messages lost; main agent only sees “subagent execution failed”, leading to infinite retries. | 🔥 4 comments – critical for debugging and collaboration reliability |
-| [#13633](https://github.com/QwenLM/qwen-code/issues/13633) | Request for a hook signal when user cancels a turn (Esc/Ctrl+C). Enables external monitoring and cleanup. | 🔥 4 comments – developer-driven UX improvement |
+| [#12380](https://github.com/QwenLM/qwen-code/issues/12380) | Proposal for staged Managed Agent architecture with durable sessions, stable WebShell, and independent inference—core to multi-agent scalability | 49 comments; P2 priority; high engagement from dev leads |
+| [#13395](https://github.com/QwenLM/qwen-code/issues/13395) | Tracking Kubernetes tool runtime progress and cross-platform delivery gates; critical for enterprise deployment | 16 comments; active development thread; key infrastructure milestone |
+| [#13650](https://github.com/QwenLM/qwen-code/issues/13650) | Hosted Session journal dies permanently after control-plane outage spanning activation renewal—no recovery path | 3 comments; P1 severity; indicates system resilience gap |
+| [#13570](https://github.com/QwenLM/qwen-code/issues/13570) | Auto mode blocks inert text mentioning "amend" phrase without escape hatch—security risk in user input handling | 7 comments; P2; urgent UX/security concern |
+| [#13566](https://github.com/QwenLM/qwen-code/issues/13566) | Web-shell approval card leaves model-supplied text unsanitized—potential XSS vector | 6 comments; P2; follow-up to merged PR with unresolved safety gaps |
+| [#13649](https://github.com/QwenLM/qwen-code/issues/13649) | A2A messages without `contextId` create unbounded, indistinguishable chat sessions—scalability hazard | 3 comments; P2; impacts multi-agent coordination reliability |
+| [#13513](https://github.com/QwenLM/qwen-code/issues/13513) | Environment overrides for system settings paths honored without file ownership checks—privilege escalation risk | 5 comments; P2; serious security flaw |
+| [#13632](https://github.com/QwenLM/qwen-code/issues/13632) | Request to refresh MCP server tools on `tools/list_changed` notification—essential for dynamic tooling | 6 comments; P2; sought by integrators using external servers |
+| [#13633](https://github.com/QwenLM/qwen-code/issues/13633) | Propose hook signal for user-cancelled turns (Esc/Ctrl+C)—needed for telemetry and UI state tracking | 4 comments; P2; important for developer observability |
+| [#13414](https://github.com/QwenLM/qwen-code/issues/13414) | `versionSpellingAlias` rejects minor versions with variant letters (e.g., `glm-4.5v`) and lacks testing | 3 comments; P2; breaks backward compatibility |
 
 ---
 
-### **4. Key PR Progress**  
-| PR | Summary & Impact | GitHub Link |
-|----|------------------|------------|
-| [#13572](https://github.com/QwenLM/qwen-code/pull/13572) | Lands H5b/H5c channel runtime for email reference adapter — enables secure, structured agent communication. | [PR #13572](https://github.com/QwenLM/qwen-code/pull/13572) |
-| [#13554](https://github.com/QwenLM/qwen-code/pull/13554) | Implements stream-capture output collection — extends retention lifecycle to shell outputs. Improves debugability. | [PR #13554](https://github.com/QwenLM/qwen-code/pull/13554) |
-| [#13550](https://github.com/QwenLM/qwen-code/pull/13550) | Delivers H4b child Session runtime — foundational for nested agent hierarchies. | [PR #13550](https://github.com/QwenLM/qwen-code/pull/13550) |
-| [#13578](https://github.com/QwenLM/qwen-code/pull/13578) | Sanitizes model-supplied text at web-shell approval card siblings — mitigates XSS risk. | [PR #13578](https://github.com/QwenLM/qwen-code/pull/13578) |
-| [#13598](https://github.com/QwenLM/qwen-code/pull/13598) | Implements H6b/H6c automation runtime for persistent definitions — enables long-lived agent behaviors. | [PR #13598](https://github.com/QwenLM/qwen-code/pull/13598) |
-| [#13526](https://github.com/QwenLM/qwen-code/pull/13526) | Adds private CSI runtime foundations — experimental but vital for secure, isolated execution environments. | [PR #13526](https://github.com/QwenLM/qwen-code/pull/13526) |
-| [#13337](https://github.com/QwenLM/qwen-code/pull/13337) | Fixes Feishu inbound file write failure — preserves text fallback and cleans orphaned dirs. | [PR #13337](https://github.com/QwenLM/qwen-code/pull/13337) |
-| [#13571](https://github.com/QwenLM/qwen-code/pull/13571) | Opt-in memory extraction cadence after no-op runs — reduces unnecessary context pressure. | [PR #13571](https://github.com/QwenLM/qwen-code/pull/13571) |
-| [#13568](https://github.com/QwenLM/qwen-code/pull/13568) | Routes LSP queries to applicable servers based on language/workspace — improves performance and accuracy. | [PR #13568](https://github.com/QwenLM/qwen-code/pull/13568) |
-| [#13579](https://github.com/QwenLM/qwen-code/pull/13579) | Recovers outer XML calls with quoted content — prevents loss of valid tool parameters. | [PR #13579](https://github.com/QwenLM/qwen-code/pull/13579) |
+## Key PR Progress  
+
+| PR | Summary | Status |
+|----|--------|--------|
+| [#13598](https://github.com/QwenLM/qwen-code/pull/13598) | Lands H6b/H6c automation runtime for persistent agent definitions—part of managed agent staging | Open |
+| [#13572](https://github.com/QwenLM/qwen-code/pull/13572) | Implements H5b/H5c channel runtime with email reference adapter—enables secure inter-agent messaging | Open |
+| [#13621](https://github.com/QwenLM/qwen-code/pull/13621) | Adds opt-in production replay-floor advancement for session event retention—key for audit compliance | Open |
+| [#13559](https://github.com/QwenLM/qwen-code/pull/13559) | Fixes unmatched backticks in table rows by aligning parsing logic with `INLINE_CODE_SPAN_PATTERN_SOURCE` | Open |
+| [#13596](https://github.com/QwenLM/qwen-code/pull/13596) | Strips UTF-8 BOM before parsing MCP config files—fixes silent parse failures | Open |
+| [#13648](https://github.com/QwenLM/qwen-code/pull/13648) | Updates SDK mirror link in session-agents contract documentation—improves type consistency | Closed |
+| [#13653](https://github.com/QwenLM/qwen-code/pull/13653) | Isolates hosted catalog refresh and verifies ACP defaults—enhances test stability | Closed |
+| [#13550](https://github.com/QwenLM/qwen-code/pull/13550) | Implements H4b child Session runtime—foundation for nested agent execution | Open |
+| [#13630](https://github.com/QwenLM/qwen-code/pull/13630) | Settles deferred review findings from PR #13352—hardens physical stop behavior | Open |
+| [#13179](https://github.com/QwenLM/qwen-code/pull/13179) | Hardens managed panel failure lifecycle and worker path containment—improves sandboxing robustness | Open |
 
 ---
 
-### **5. Hot Discussions**  
-*(No discussion threads provided in data source)*  
-→ *Omitted*
+## Hot Discussions  
+*No discussion threads provided in the data source.*
 
 ---
 
-### **6. Feature Request Trends**  
-The community is converging on three major directions:  
-1. **Durable, Recoverable Sessions**: Demand for stable agent lifecycles, session persistence, and recovery from interruptions (#12380, #12867, #13395).  
-2. **Secure & Predictable Tool Execution**: Focus on sanitization, proper error propagation, and input validation — especially around web-shell and CLI (#13570, #13566, #13597).  
-3. **Enhanced Developer Control & Observability**: Hooks on user actions (e.g., cancel), better telemetry, and dynamic context management (#13633, #13613, #2566).
-
-These trends reflect a shift from feature-rich experimentation toward robustness, security, and operational control.
+## Feature Request Trends  
+The community is increasingly focused on **multi-agent system maturity** and **enterprise-grade reliability**:
+- **Managed Agent Architecture**: Demand for staged, durable, recoverable agents with independent inference and stable WebShell integration (#12380).
+- **Kubernetes Integration**: Strong interest in cross-platform delivery via Kubernetes tool runtime (#13395), signaling move toward cloud-native deployment.
+- **Session Resilience**: High demand for reliable recovery from outages, including journal persistence and replay-floor management (#13650, #13621).
+- **Dynamic Tooling**: Need for real-time tool registry updates via notifications like `list_changed` (#13632).
+- **Security & Sanitization**: Repeated calls for stricter input validation, especially in shell commands and approval cards (#13570, #13566).
 
 ---
 
-### **7. Developer Pain Points**  
-Recurring frustrations include:  
-- **Token Waste in Dead-End Loops** (#10887): Agents continue executing despite repeated failures — costly and inefficient.  
-- **Unclear Cancellation Semantics** (#6710, #13502): Lack of distinction between user-initiated and system-interrupted turns breaks state consistency.  
-- **Leaked Internal Tags** (#10797, #10791, #10559): Non-thinking tags (e.g., `<thinking>`, `</think>`) appearing in user output — harms readability and trust.  
-- **Inconsistent Behavior Across Modes** (#13634): `/update` command behaves differently in interactive vs non-interactive contexts — confusing UX.  
-- **Security Gaps in Env Overrides** (#13513): No file ownership checks on system settings paths — potential for privilege escalation.
+## Developer Pain Points  
+Recurring frustrations highlight challenges in **system robustness**, **UX consistency**, and **security hygiene**:
+- **Session Recovery Gaps**: Cancellation intent lost across restarts despite existing hooks (#6710, #13502).
+- **Unsanitized Output**: Internal tags leaking into user-visible output (e.g., `</think>`, `tool-result` blocks) remains a top bug category (#10797, #10700).
+- **Invisible Failures**: Silent parsing errors due to BOM or malformed JSON glue (`}{`) cause hard-to-debug failures (#13035, #13596).
+- **Tool Management Complexity**: Inconsistent handling of provider availability during host replacement (#13644), and lack of escape hatches in auto-mode (#13570).
+- **Testing Gaps**: Numerous open test PRs indicate incomplete coverage of core behaviors (e.g., memory catalog paths, cancellation invariants) — signifying under-instrumented codebase.
 
-These pain points highlight growing demand for stricter validation, clearer boundaries, and more predictable behavior in production use cases.
+---  
+*Digest generated from GitHub data: [qwen-code](https://github.com/QwenLM/qwen-code) | 2026-10-08*
 
 </details>
 
 ---
-*This digest is auto-generated by [agents-radar](https://github.com/duanyytop/agents-radar).*
+*This digest is auto-generated by [agents-radar](https://github.com/Qyii22/agents-radar).*
