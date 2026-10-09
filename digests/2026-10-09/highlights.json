@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.295 修复关键问题发布",
+      "OpenAI Codex v0.162.0 稳定版发布",
+      "Gemini CLI 活跃但无版本发布",
+      "GitHub Copilot CLI v1.0.95 系列上线",
+      "Qwen Code PR 势头强劲",
+      "Pi 工具活跃3个社区讨论"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.9.9 修复重大回归后稳定",
+      "OpenClaw 会话迁移关键漏洞修复",
+      "v2026.9.9 僵尸进程泄漏已解决",
+      "推荐升级医生修复工具",
+      "插件磁盘耗尽问题已修复",
+      "网关更新后稳定性提升"
+    ],
+    "ai-infra": [
+      "vLLM v0.30.1rc1 支持 FP8 发布",
+      "SGLang 高度不稳定且存在回归",
+      "llama.cpp b11515 频繁修复漏洞",
+      "Ollama v0.40.2 发布后问题不断",
+      "LiteLLM v1.106.0-dev.2 专注安全",
+      "Unsloth 因快速更新出现新问题"
+    ],
+    "ai-trending": [
+      "thedotmack/claude-mem: 今日+670星",
+      "Agent-Reach 推动代理即服务",
+      "Graphify 自主构建知识图谱",
+      "FireCrawl 实现真实网络爬取自动化",
+      "RAG 与向量数据库受关注",
+      "Headroom 和 Caveman 关注令牌效率"
+    ],
+    "ai-web": [
+      "Anthropic 推出网络安全任务",
+      "开源扫描器免费开放",
+      "1.5亿美元美国政府合作计划",
+      "OpenAI 仅更新元数据应对滥用",
+      "Claude 融入联邦科研工作",
+      "网络安全任务预示现实防御转向"
+    ],
+    "ai-hn": [
+      "Step 5 预览：100万上下文 MoE 模型上线",
+      "Mistral Large 4 创新开源权重基准",
+      "AI 辅助证明最优正方形排列",
+      "OpenAI 因争议撤回三项数学成果",
+      "诺基亚110 测试真实世界AI代理",
+      "Jevman 基准评估代理可靠性"
+    ],
+    "ai-arxiv": [
+      "Caught in the Act：主动检测AI欺骗",
+      "OnTrack 实时监控大模型代理",
+      "BrickBench 测评代理机器人性能",
+      "SpaceCast-Bench 评估空间推理",
+      "Bi-FORK 模拟物理系统分叉",
+      "VFold 提升内存压缩效率推理"
+    ],
+    "ai-community": [
+      "重试逻辑保障AI系统稳健",
+      "肉身代理：人类作AI解释者",
+      "Jev 零错误使用 Gemini Flash-Lite",
+      "TouchGrass 未主动使用时表现佳",
+      "沉默的AI故障引发工程不信任",
+      "本地模型因隐私控制受青睐"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.295 released with key fixes",
+      "OpenAI Codex v0.162.0 stable release",
+      "Gemini CLI no release despite activity",
+      "GitHub Copilot CLI v1.0.95 series out",
+      "Qwen Code shows strong PR momentum",
+      "Pi tool has 3 active community discussions"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.9.9 stabilizes after major regressions",
+      "Critical session migration bugs fixed in OpenClaw",
+      "Zombie process leaks resolved in v2026.9.9",
+      "Doctor repair tool now recommended for upgrade",
+      "Plugin capture disk exhaustion issue fixed",
+      "Gateway stability improved post-update"
+    ],
+    "ai-infra": [
+      "vLLM v0.30.1rc1 released with FP8 support",
+      "SGLang faces high instability and regressions",
+      "llama.cpp b11515 brings frequent bugfixes",
+      "Ollama v0.40.2 suffers post-release issues",
+      "LiteLLM v1.106.0-dev.2 focuses on security",
+      "Unsloth sees rising issues from rapid updates"
+    ],
+    "ai-trending": [
+      "thedotmack/claude-mem: +670 stars today",
+      "Agent-Reach pushes agent-as-a-service",
+      "Graphify builds knowledge graphs autonomously",
+      "FireCrawl automates real-world web crawling",
+      "RAG and vector databases gain traction",
+      "Headroom and Caveman focus on token efficiency"
+    ],
+    "ai-web": [
+      "Anthropic launches Cyber Mission for security",
+      "OSS Scanner now available for free scanning",
+      "$150M Genesis Mission with U.S. government",
+      "OpenAI updates metadata-only on misuse",
+      "Claude now embedded in federal science work",
+      "Cyber Mission signals shift to real-world defense"
+    ],
+    "ai-hn": [
+      "Step 5 Preview: 1M-context MoE model live",
+      "Mistral Large 4 sets new open-weight benchmark",
+      "AI-assisted proof of optimal square packing",
+      "OpenAI withdraws three math results amid debate",
+      "Nokia 110 used to test AI agents in real world",
+      "Jevman benchmark evaluates agent reliability"
+    ],
+    "ai-arxiv": [
+      "Caught in the Act: detects AI deception proactively",
+      "OnTrack monitors LLM agents in real time",
+      "BrickBench tests agentic robotics performance",
+      "SpaceCast-Bench evaluates spatial reasoning",
+      "Bi-FORK models bifurcating physical systems",
+      "VFold compresses memory for efficient inference"
+    ],
+    "ai-community": [
+      "Retry logic critical for AI system robustness",
+      "Meat proxies: humans as interpreters for AI",
+      "Jev zero mistakes with Gemini Flash-Lite",
+      "TouchGrass succeeds when not actively used",
+      "Silent AI failures spark engineering distrust",
+      "Local models gain traction for privacy control"
+    ]
+  }
+}
